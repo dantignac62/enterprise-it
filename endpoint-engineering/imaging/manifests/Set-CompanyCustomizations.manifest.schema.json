@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enterprise-it/imaging/manifests/Set-CompanyCustomizations.manifest.schema.json",
+  "title": "Company Customizations Manifest",
+  "description": "Switch-style manifest schema for Set-CompanyCustomizations.ps1.",
+  "type": "object",
+  "required": ["name", "version", "registrySettings", "services", "defaultProfile", "oneDriveWin32Uninstall"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema":         { "type": "string" },
+    "name":            { "type": "string", "const": "CompanyCustomizations" },
+    "version":         { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "description":     { "type": "string" },
+    "lastModifiedUtc": { "type": "string", "format": "date-time" },
+
+    "registrySettings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/registrySetting" }
+    },
+
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["section", "name", "description", "startupType", "enabled"],
+        "additionalProperties": false,
+        "properties": {
+          "section":     { "type": "string" },
+          "name":        { "type": "string", "minLength": 1 },
+          "description": { "type": "string" },
+          "startupType": { "type": "string", "enum": ["Automatic", "AutomaticDelayedStart", "Manual", "Disabled"] },
+          "startAfter":  { "type": "boolean", "description": "If true, Start-Service is called after the StartupType is set. Use for services whose configuration must be running for downstream readers (e.g., consent re-read) to take effect during the same run." },
+          "enabled":     { "type": "boolean" }
+        }
+      }
+    },
+
+    "defaultProfile": {
+      "type": "object",
+      "required": ["registrySettings", "foldersToRemove"],
+      "additionalProperties": false,
+      "properties": {
+        "registrySettings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["subKey", "name", "type", "value", "description", "enabled"],
+            "additionalProperties": false,
+            "properties": {
+              "subKey":      { "type": "string", "minLength": 1, "description": "Path UNDER the loaded default-profile hive root, e.g. 'SOFTWARE\\Microsoft\\...'." },
+              "name":        { "type": "string" },
+              "type":        { "type": "string", "enum": ["DWord", "QWord", "String", "ExpandString", "MultiString", "Binary"] },
+              "value": {
+                "oneOf": [
+                  { "type": "integer" },
+                  { "type": "string" },
+                  { "type": "array", "items": { "type": "string" } },
+                  { "type": "array", "items": { "type": "integer", "minimum": 0, "maximum": 255 } }
+                ]
+              },
+              "description": { "type": "string" },
+              "enabled":     { "type": "boolean" }
+            }
+          }
+        },
+        "foldersToRemove": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["relativePath", "description", "enabled"],
+            "additionalProperties": false,
+            "properties": {
+              "relativePath": { "type": "string", "minLength": 1, "description": "Path relative to %SystemDrive%\\Users\\Default." },
+              "description":  { "type": "string" },
+              "enabled":      { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+
+    "oneDriveWin32Uninstall": {
+      "type": "object",
+      "required": ["description", "enabled"],
+      "additionalProperties": false,
+      "properties": {
+        "description": { "type": "string" },
+        "enabled":     { "type": "boolean" }
+      }
+    }
+  },
+
+  "$defs": {
+    "registrySetting": {
+      "type": "object",
+      "required": ["section", "description", "path", "name", "type", "value", "enabled"],
+      "additionalProperties": false,
+      "properties": {
+        "section":     { "type": "string" },
+        "description": { "type": "string" },
+        "path":        { "type": "string", "pattern": "^HK(LM|CU):" },
+        "name":        { "type": "string" },
+        "type":        { "type": "string", "enum": ["DWord", "QWord", "String", "ExpandString", "MultiString", "Binary"] },
+        "value": {
+          "oneOf": [
+            { "type": "integer" },
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "array", "items": { "type": "integer", "minimum": 0, "maximum": 255 } }
+          ]
+        },
+        "enabled":     { "type": "boolean" }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+# Runtime artifacts produced by Invoke-HardeningOrchestrator.ps1
+**/Logs/
+**/Evidence/
+**/Mount/
+
+# Sentinel / state files
+**/UpdatesFinished.txt
+**/pipeline.state.json
+
+# Extracted ISO source trees
+**/Win_Pro_11_25H2*/
+
+# Intune package outputs
+*.intunewin
+
+# Editor swap / backup files
+.*.kate-swp
+*.swp
+*~
+.DS_Store
+Thumbs.db

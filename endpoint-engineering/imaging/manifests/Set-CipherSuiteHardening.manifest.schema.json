@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enterprise-it/imaging/manifests/Set-CipherSuiteHardening.manifest.schema.json",
+  "title": "Cipher Suite Hardening Manifest",
+  "description": "Switch-style manifest schema for Set-CipherSuiteHardening.ps1.",
+  "type": "object",
+  "required": ["name", "version", "protocols", "ciphers", "hashes"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema":         { "type": "string" },
+    "name":            { "type": "string", "const": "CipherSuiteHardening" },
+    "version":         { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "description":     { "type": "string" },
+    "lastModifiedUtc": { "type": "string", "format": "date-time" },
+
+    "protocols": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "clientEnabled", "serverEnabled", "disabledByDefault", "enabled"],
+        "additionalProperties": false,
+        "properties": {
+          "name":              { "type": "string", "minLength": 1 },
+          "description":       { "type": "string" },
+          "clientEnabled":     { "type": "boolean" },
+          "serverEnabled":     { "type": "boolean" },
+          "disabledByDefault": { "type": "boolean" },
+          "enabled":           { "type": "boolean" }
+        }
+      }
+    },
+
+    "ciphers": { "$ref": "#/$defs/stateEntryList" },
+    "hashes":  { "$ref": "#/$defs/stateEntryList" }
+  },
+
+  "$defs": {
+    "stateEntryList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "state", "enabled"],
+        "additionalProperties": false,
+        "properties": {
+          "name":        { "type": "string", "minLength": 1 },
+          "description": { "type": "string" },
+          "state":       { "type": "string", "enum": ["Enabled", "Disabled"] },
+          "enabled":     { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

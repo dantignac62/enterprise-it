@@ -1,0 +1,48 @@
+{
+  "$schema": "./Set-BitLockerConfig.manifest.schema.json",
+  "name": "BitLockerConfig",
+  "version": "1.0.0",
+  "description": "Switch-style manifest for the BitLocker FVE Group Policy registry surface (HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE). Policy only - encryption is enabled post-deploy by Intune/SCCM/Autopilot. Each entry has 'enabled' (bool); set false to skip while preserving the audit trail (recorded as SKIPPED_BY_MANIFEST). Some entries (the three EncryptionMethodWithXts* values) overlap with CIS L1 18.9.5.x and are deliberately duplicated here so the BitLocker policy stays self-contained for auditors who review it independently.",
+  "lastModifiedUtc": "2026-04-26T00:00:00Z",
+
+  "registrySettings": [
+    { "section": "Encryption Methods",  "description": "OS: XTS-AES 256",                 "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "EncryptionMethodWithXtsOs",      "type": "DWord", "value": 7, "enabled": true },
+    { "section": "Encryption Methods",  "description": "Fixed: XTS-AES 256",              "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "EncryptionMethodWithXtsFdv",     "type": "DWord", "value": 7, "enabled": true },
+    { "section": "Encryption Methods",  "description": "Removable: AES-CBC 256",          "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "EncryptionMethodWithXtsRdv",     "type": "DWord", "value": 4, "enabled": true },
+
+    { "section": "TPM Startup",         "description": "Advanced startup config",         "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "UseAdvancedStartup",             "type": "DWord", "value": 1, "enabled": true },
+    { "section": "TPM Startup",         "description": "Disallow without TPM",            "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "EnableBDEWithNoTPM",             "type": "DWord", "value": 0, "enabled": true },
+    { "section": "TPM Startup",         "description": "Require TPM",                     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "UseTPM",                         "type": "DWord", "value": 1, "enabled": true },
+    { "section": "TPM Startup",         "description": "No TPM+PIN",                      "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "UseTPMPIN",                      "type": "DWord", "value": 0, "enabled": true },
+    { "section": "TPM Startup",         "description": "No TPM+startup key",              "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "UseTPMKey",                      "type": "DWord", "value": 0, "enabled": true },
+    { "section": "TPM Startup",         "description": "No TPM+PIN+key",                  "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "UseTPMKeyPIN",                   "type": "DWord", "value": 0, "enabled": true },
+    { "section": "TPM Startup",         "description": "No enhanced PIN",                 "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "UseEnhancedPin",                 "type": "DWord", "value": 0, "enabled": true },
+
+    { "section": "OS Recovery",         "description": "OS: Recovery enabled",            "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSRecovery",                     "type": "DWord", "value": 1, "enabled": true },
+    { "section": "OS Recovery",         "description": "OS: Allow recovery password",     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSRecoveryPassword",             "type": "DWord", "value": 2, "enabled": true },
+    { "section": "OS Recovery",         "description": "OS: Allow recovery key",          "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSRecoveryKey",                  "type": "DWord", "value": 2, "enabled": true },
+    { "section": "OS Recovery",         "description": "OS: No DRA",                      "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSManageDRA",                    "type": "DWord", "value": 0, "enabled": true },
+    { "section": "OS Recovery",         "description": "OS: Backup to Entra/AD",          "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSActiveDirectoryBackup",        "type": "DWord", "value": 1, "enabled": true },
+    { "section": "OS Recovery",         "description": "OS: Store passwords+packages",    "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSActiveDirectoryInfoToStore",   "type": "DWord", "value": 1, "enabled": true },
+    { "section": "OS Recovery",         "description": "OS: Hide recovery page",          "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSHideRecoveryPage",             "type": "DWord", "value": 1, "enabled": true },
+    { "section": "OS Recovery",         "description": "OS: Require Entra backup",        "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSRequireActiveDirectoryBackup", "type": "DWord", "value": 1, "enabled": true },
+
+    { "section": "Fixed Data Recovery", "description": "Fixed: Recovery enabled",         "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVRecovery",                     "type": "DWord", "value": 1, "enabled": true },
+    { "section": "Fixed Data Recovery", "description": "Fixed: Allow recovery password",  "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVRecoveryPassword",             "type": "DWord", "value": 2, "enabled": true },
+    { "section": "Fixed Data Recovery", "description": "Fixed: Allow recovery key",       "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVRecoveryKey",                  "type": "DWord", "value": 2, "enabled": true },
+    { "section": "Fixed Data Recovery", "description": "Fixed: No DRA",                   "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVManageDRA",                    "type": "DWord", "value": 0, "enabled": true },
+    { "section": "Fixed Data Recovery", "description": "Fixed: Backup to Entra/AD",       "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVActiveDirectoryBackup",        "type": "DWord", "value": 1, "enabled": true },
+    { "section": "Fixed Data Recovery", "description": "Fixed: Store passwords+packages", "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVActiveDirectoryInfoToStore",   "type": "DWord", "value": 1, "enabled": true },
+    { "section": "Fixed Data Recovery", "description": "Fixed: Require Entra backup",     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVRequireActiveDirectoryBackup", "type": "DWord", "value": 1, "enabled": true },
+    { "section": "Fixed Data Recovery", "description": "Fixed: Cert-based auto-unlock",   "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVAllowUserCert",                "type": "DWord", "value": 1, "enabled": true },
+    { "section": "Fixed Data Recovery", "description": "Fixed: No BL To Go reader",       "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVNoBitLockerToGoReader",        "type": "DWord", "value": 1, "enabled": true },
+    { "section": "Fixed Data Recovery", "description": "Fixed: Deny write unprotected",   "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVDenyWriteAccess",              "type": "DWord", "value": 1, "enabled": true },
+
+    { "section": "Removable Drives",    "description": "Removable: Deny write unprotected","path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "RDVDenyWriteAccess",             "type": "DWord", "value": 1, "enabled": true },
+    { "section": "Removable Drives",    "description": "Removable: Allow cross-org",      "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "RDVDenyCrossOrg",                 "type": "DWord", "value": 0, "enabled": true },
+
+    { "section": "Encryption Type",     "description": "OS: Full disk",                   "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSEncryptionType",                "type": "DWord", "value": 1, "enabled": true },
+    { "section": "Encryption Type",     "description": "Fixed: Full disk",                "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVEncryptionType",               "type": "DWord", "value": 1, "enabled": true },
+    { "section": "Encryption Type",     "description": "Removable: Used space only",      "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "RDVEncryptionType",               "type": "DWord", "value": 2, "enabled": true }
+  ]
+}
