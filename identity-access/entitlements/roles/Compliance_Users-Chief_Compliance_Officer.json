@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Compliance_Users-Chief_Compliance_Officer",
   "displayName": "Chief Compliance Officer",
   "department": "Compliance_Users",
-  "source": {
-    "snapshotFile": "Compliance_Users.json",
-    "searchBase": "OU=Temp_RBAC_Compliance_Users,OU=Compliance_Users,OU=Compliance,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_cco"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=BI_Compliance,OU=BI,OU=Security Groups,DC=mlabs,DC=com",

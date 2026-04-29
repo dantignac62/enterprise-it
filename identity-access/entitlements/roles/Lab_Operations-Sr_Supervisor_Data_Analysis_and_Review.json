@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Lab_Operations-Sr_Supervisor_Data_Analysis_and_Review",
   "displayName": "Sr. Supervisor, Data Analysis and Review",
   "department": "Lab_Operations",
-  "source": {
-    "snapshotFile": "Lab_Operations.json",
-    "searchBase": "OU=Temp_RBAC_LabOperations_Users,OU=LabOperations_Users,OU=Lab Operations,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_ssdar"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=Associate Scientist,OU=Security Groups,DC=mlabs,DC=com",

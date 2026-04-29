@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "IT-Application_Specialist",
   "displayName": "Application Specialist",
   "department": "IT",
-  "source": {
-    "snapshotFile": "IT.json",
-    "searchBase": "OU=RBAC_IT_ML Users,OU=ML Users,OU=IT,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_appspec"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=ACTR&D_Team,OU=Security Groups,DC=mlabs,DC=com",

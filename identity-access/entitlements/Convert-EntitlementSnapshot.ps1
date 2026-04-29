@@ -3,14 +3,24 @@
     Convert raw entitlement snapshots into normalized role-definition files.
 
 .DESCRIPTION
-    Reads per-department snapshot JSONs (e.g., Sales.json) emitted by the
-    RBAC template-account export, groups users by JobTitle, merges group
-    memberships per the chosen strategy, and writes one role file per
-    (department, JobTitle) pair to the output directory.
+    DEPRECATED as of 2026-04-29. Role JSONs under roles/ are now the
+    canonical source of truth, edited directly via PR review. This
+    converter emits schemaVersion 1.0 with a `source` block and (where
+    applicable) a `variance` block; the live schema is 2.0, which
+    excludes both. Output WILL fail schema validation.
 
-    The output conforms to schema/role.schema.json. M365 license SKUs are
-    conferred via group-based licensing on entries in SecurityGroups[];
-    they are not enumerated as a separate field.
+    Kept for historical reference and one-off bootstrap from new
+    template snapshots; if you run it, expect to hand-migrate the output
+    to v2.0 (drop `source`, drop `variance`, bump schemaVersion) before
+    committing.
+
+    Original behavior: reads per-department snapshot JSONs (e.g.,
+    Sales.json) emitted by the RBAC template-account export, groups
+    users by JobTitle, merges group memberships per the chosen strategy,
+    and writes one role file per (department, JobTitle) pair to the
+    output directory. M365 license SKUs are conferred via group-based
+    licensing on entries in SecurityGroups[]; they are not enumerated
+    as a separate field.
 
 .PARAMETER SnapshotDir
     Directory containing the raw snapshot JSONs. Defaults to the script's

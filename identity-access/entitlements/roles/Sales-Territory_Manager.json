@@ -1,21 +1,9 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Sales-Territory_Manager",
   "displayName": "Territory Manager",
   "department": "Sales",
   "notes": "Variance reconciled 2026-04-29: BTC_TM is TM baseline; BTC_AM dropped (was drift on rbac_tm1, AM-scoped); LSA Territory Managers (DL) and MH Reps universalized to all TMs.",
-  "source": {
-    "snapshotFile": "Sales.json",
-    "searchBase": "OU=Temp_RBAC_Sales_Users,OU=Sales_Users,OU=Sales,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_tm1",
-      "rbac_tm2",
-      "rbac_tm3"
-    ],
-    "mergeStrategy": "intersection",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=BTC_Authentication,OU=Security Groups,DC=mlabs,DC=com",

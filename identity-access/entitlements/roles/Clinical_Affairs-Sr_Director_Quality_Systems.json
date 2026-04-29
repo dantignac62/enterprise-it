@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Clinical_Affairs-Sr_Director_Quality_Systems",
   "displayName": "Sr. Director, Quality Systems",
   "department": "Clinical_Affairs",
-  "source": {
-    "snapshotFile": "Clinical_Affairs.json",
-    "searchBase": "OU=Temp_RBAC_ClinicalAffairs_Users,OU=ClinicalAffairs_Users,OU=Clinical Affairs,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_sdqs"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=BI_BT,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
@@ -41,7 +31,7 @@
     "distributionGroups": [
       "CN=Building 1,OU=Distribution Groups,DC=mlabs,DC=com",
       "CN=CR Communication,OU=Distribution Groups,DC=mlabs,DC=com",
-      "CN=End of Day – Lab 7,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=End of Day \u2013 Lab 7,OU=Distribution Groups,DC=mlabs,DC=com",
       "CN=Millennium Health Core Training Committee,OU=Distribution Groups,DC=mlabs,DC=com",
       "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
       "CN=Mismatch Report,OU=Distribution Groups,DC=mlabs,DC=com",

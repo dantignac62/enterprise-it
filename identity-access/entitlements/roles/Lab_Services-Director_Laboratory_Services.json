@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Lab_Services-Director_Laboratory_Services",
   "displayName": "Director, Laboratory Services",
   "department": "Lab_Services",
-  "source": {
-    "snapshotFile": "Lab_Services.json",
-    "searchBase": "OU=Temp_RBAC_LabServices_Users,OU=LabServices_Users,OU=Lab Services,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_dls"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=Audits Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",

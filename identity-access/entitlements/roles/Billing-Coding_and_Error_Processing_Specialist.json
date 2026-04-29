@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Billing-Coding_and_Error_Processing_Specialist",
   "displayName": "Coding and Error Processing Specialist",
   "department": "Billing",
-  "source": {
-    "snapshotFile": "Billing.json",
-    "searchBase": "OU=Temp_RBAC_Billing_Users,OU=Billing_Users,OU=Billing,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_ceps"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=Biscom URGENT,OU=Security Groups,DC=mlabs,DC=com",

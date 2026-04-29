@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Billing-Quality_Assurance_Auditor",
   "displayName": "Quality Assurance Auditor",
   "department": "Billing",
-  "source": {
-    "snapshotFile": "Billing.json",
-    "searchBase": "OU=Temp_RBAC_Billing_Users,OU=Billing_Users,OU=Billing,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_qaa"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=Billing Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",

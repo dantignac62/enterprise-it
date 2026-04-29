@@ -1,21 +1,9 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Sales-Account_Manager",
   "displayName": "Account Manager",
   "department": "Sales",
   "notes": "Variance reconciled 2026-04-29: MH WLAN Access and SalesForceUsers are AM baseline (previously held by rbac_am2 only).",
-  "source": {
-    "snapshotFile": "Sales.json",
-    "searchBase": "OU=Temp_RBAC_Sales_Users,OU=Sales_Users,OU=Sales,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_am1",
-      "rbac_am2",
-      "rbac_am3"
-    ],
-    "mergeStrategy": "intersection",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=BTC_AM,OU=Security Groups,DC=mlabs,DC=com",

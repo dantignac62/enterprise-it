@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "HR-Sr_Manager_Compensation_and_Benefits",
   "displayName": "Sr. Manager, Compensation and Benefits",
   "department": "HR",
-  "source": {
-    "snapshotFile": "HR.json",
-    "searchBase": "OU=Temp_RBAC_HumanResources_Users,OU=HumanResources_Users,OU=Human Resources,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_smcb"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",

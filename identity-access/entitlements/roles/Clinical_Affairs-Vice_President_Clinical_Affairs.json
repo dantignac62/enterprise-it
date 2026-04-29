@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Clinical_Affairs-Vice_President_Clinical_Affairs",
   "displayName": "Vice President, Clinical Affairs",
   "department": "Clinical_Affairs",
-  "source": {
-    "snapshotFile": "Clinical_Affairs.json",
-    "searchBase": "OU=Temp_RBAC_ClinicalAffairs_Users,OU=ClinicalAffairs_Users,OU=Clinical Affairs,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_vpca"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=BI_ClinicalAffairs,OU=BI,OU=Security Groups,DC=mlabs,DC=com",

@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "IT-Database_Administrator",
   "displayName": "Database Administrator",
   "department": "IT",
-  "source": {
-    "snapshotFile": "IT.json",
-    "searchBase": "OU=RBAC_IT_ML Users,OU=ML Users,OU=IT,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac.dbadmin"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=BI_BT,OU=BI,OU=Security Groups,DC=mlabs,DC=com",

@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Marketing-Sr_VP_Market_Access",
   "displayName": "Sr. VP, Market Access",
   "department": "Marketing",
-  "source": {
-    "snapshotFile": "Marketing.json",
-    "searchBase": "OU=Temp_RBAC_ManageCare_Users,OU=MarketAccess_Users,OU=Market Access,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac.srvpmarketac"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=Audits - Medical Records Requests Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",

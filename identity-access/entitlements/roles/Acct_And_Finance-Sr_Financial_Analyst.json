@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Acct_And_Finance-Sr_Financial_Analyst",
   "displayName": "Sr. Financial Analyst",
   "department": "Acct_And_Finance",
-  "source": {
-    "snapshotFile": "Acct-&-Finance.json",
-    "searchBase": "OU=Temp_RBAC_Acct_Fin_Users,OU=AcctgFinance_Users,OU=Acctg And Finance,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_srfin_analyst"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=Accounting Bank Statements Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",

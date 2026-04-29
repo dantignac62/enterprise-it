@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Acct_And_Finance-Accounting_Support_II",
   "displayName": "Accounting Support II",
   "department": "Acct_And_Finance",
-  "source": {
-    "snapshotFile": "Acct-&-Finance.json",
-    "searchBase": "OU=Temp_RBAC_Acct_Fin_Users,OU=AcctgFinance_Users,OU=Acctg And Finance,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_acct_suppII"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=Accounting Check Copier,OU=Security Groups,DC=mlabs,DC=com",

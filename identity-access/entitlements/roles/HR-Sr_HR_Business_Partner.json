@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "HR-Sr_HR_Business_Partner",
   "displayName": "Sr. HR Business Partner",
   "department": "HR",
-  "source": {
-    "snapshotFile": "HR.json",
-    "searchBase": "OU=Temp_RBAC_HumanResources_Users,OU=HumanResources_Users,OU=Human Resources,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_shrbp"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=Area Safety Reps,OU=Security Groups,DC=mlabs,DC=com",
@@ -31,7 +21,7 @@
     ],
     "distributionGroups": [
       "CN=Building 2,OU=Distribution Groups,DC=mlabs,DC=com",
-      "CN=End of Day – Lab 7,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=End of Day \u2013 Lab 7,OU=Distribution Groups,DC=mlabs,DC=com",
       "CN=Fire Attendance,OU=Distribution Groups,DC=mlabs,DC=com",
       "CN=HR Business Parters,OU=Distribution Groups,DC=mlabs,DC=com",
       "CN=Millennium Experience Distribution,OU=Distribution Groups,DC=mlabs,DC=com",

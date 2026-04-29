@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Legal-Paralegal",
   "displayName": "Paralegal",
   "department": "Legal",
-  "source": {
-    "snapshotFile": "Legal.json",
-    "searchBase": "OU=Temp_RBAC_Legal_Users,OU=Legal_Users,OU=Legal,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac.paralegal"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=AD_LEGAL,OU=Security Groups,DC=mlabs,DC=com",

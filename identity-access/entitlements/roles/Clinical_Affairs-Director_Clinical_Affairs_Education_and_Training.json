@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Clinical_Affairs-Director_Clinical_Affairs_Education_and_Training",
   "displayName": "Director, Clinical Affairs Education and Training",
   "department": "Clinical_Affairs",
-  "source": {
-    "snapshotFile": "Clinical_Affairs.json",
-    "searchBase": "OU=Temp_RBAC_ClinicalAffairs_Users,OU=ClinicalAffairs_Users,OU=Clinical Affairs,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_dcaet"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=BI_ClinicalAffairs,OU=BI,OU=Security Groups,DC=mlabs,DC=com",

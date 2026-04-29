@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Sales-Senior_Vice_President_Sales",
   "displayName": "Senior Vice President, Sales",
   "department": "Sales",
-  "source": {
-    "snapshotFile": "Sales.json",
-    "searchBase": "OU=Temp_RBAC_Sales_Users,OU=Sales_Users,OU=Sales,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_svps"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",

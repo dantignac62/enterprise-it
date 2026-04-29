@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Commercial_Operations-Customer_Service_Production_Supervisor",
   "displayName": "Customer Service, Production Supervisor",
   "department": "Commercial_Operations",
-  "source": {
-    "snapshotFile": "Commercial_Operations.json",
-    "searchBase": "OU=Temp_RBAC ComOps,OU=CommercialOperations_Users,OU=Commercial Operations,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_csprods"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=BI_ClientServices,OU=BI,OU=Security Groups,DC=mlabs,DC=com",

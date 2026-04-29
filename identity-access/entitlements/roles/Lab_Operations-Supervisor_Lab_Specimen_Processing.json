@@ -1,20 +1,9 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "Lab_Operations-Supervisor_Lab_Specimen_Processing",
   "displayName": "Supervisor, Lab Specimen Processing",
   "department": "Lab_Operations",
   "notes": "Variance reconciled 2026-04-29: rbac_sls deprecated as redundant; rbac_slsp's full membership becomes baseline (Duo Lab Ops, Lab Assistants, MH WLAN Access).",
-  "source": {
-    "snapshotFile": "Lab_Operations.json",
-    "searchBase": "OU=Temp_RBAC_LabOperations_Users,OU=LabOperations_Users,OU=Lab Operations,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac_sls",
-      "rbac_slsp"
-    ],
-    "mergeStrategy": "intersection",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=BI_LabOperations,OU=BI,OU=Security Groups,DC=mlabs,DC=com",

@@ -1,18 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "roleId": "IT-Quality_Assurance_Lead",
   "displayName": "Quality Assurance Lead",
   "department": "IT",
-  "source": {
-    "snapshotFile": "IT.json",
-    "searchBase": "OU=RBAC_IT_ML Users,OU=ML Users,OU=IT,DC=mlabs,DC=com",
-    "templateUsers": [
-      "rbac.qualassurlead"
-    ],
-    "mergeStrategy": "single",
-    "generatedAt": "2026-04-29T10:20:59.3870422Z",
-    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
-  },
   "entitlements": {
     "securityGroups": [
       "CN=AWS-134663537269-ADFS-QA,OU=AWS Access Groups,OU=Security Groups,DC=mlabs,DC=com",
