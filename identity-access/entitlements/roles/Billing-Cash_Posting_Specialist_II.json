@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Billing-Cash_Posting_Specialist_II",
+  "displayName": "Cash Posting Specialist II",
+  "department": "Billing",
+  "source": {
+    "snapshotFile": "Billing.json",
+    "searchBase": "OU=Temp_RBAC_Billing_Users,OU=Billing_Users,OU=Billing,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_cps2"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=001 Payor Family Team Folders,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RC_BILLING_MoveAccess,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RC_Payments,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RevCycle_Limited,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFCash-Leads,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve EOBs,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve MedRecords,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MLVPN,OU=VPN Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Default-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Revenue Cycle All Employees B7,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Billing-Cash_Posting_Speacialist_I",
+  "displayName": "Cash Posting Speacialist I",
+  "department": "Billing",
+  "source": {
+    "snapshotFile": "Billing.json",
+    "searchBase": "OU=Temp_RBAC_Billing_Users,OU=Billing_Users,OU=Billing,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_cps"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=Billing Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Finance-Cash Posting Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LDP DOCUMENTS folder access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_Data ReEntry,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RC_BCBS_Read_Only,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RC_BILLING_MoveAccess,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RC_Commercial_Read_Only,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RC_Payments,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RevCycle_Limited,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFBILLING_Accession_Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFBilling-ImportOnly,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFCash-Leads,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-DATAENTRY-eReq,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-DATAENTRY,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve EOBs,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve MedRecords,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve PGT,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFWF Cash Management Users,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFWF InsuranceSpecialists,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=List-Only Billing Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MLVPN,OU=VPN Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Payor List Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Revenue Cycle All Employees B7,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

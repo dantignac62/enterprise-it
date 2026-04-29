@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Clinical_Affairs-Research_Associate",
+  "displayName": "Research Associate",
+  "department": "Clinical_Affairs",
+  "source": {
+    "snapshotFile": "Clinical_Affairs.json",
+    "searchBase": "OU=Temp_RBAC_ClinicalAffairs_Users,OU=ClinicalAffairs_Users,OU=Clinical Affairs,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbacresearchassociat"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=BI_R&D,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=EP Evaluator,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MLIS Interface Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=R&D All,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=R&D QA Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Read-Only Lab Document Control Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Building 2,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=R&D Drug Testing,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

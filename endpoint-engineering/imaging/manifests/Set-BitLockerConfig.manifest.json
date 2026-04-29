@@ -25,7 +25,7 @@
     { "section": "OS Recovery",         "description": "OS: Backup to Entra/AD",          "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSActiveDirectoryBackup",        "type": "DWord", "value": 1, "enabled": true },
     { "section": "OS Recovery",         "description": "OS: Store passwords+packages",    "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSActiveDirectoryInfoToStore",   "type": "DWord", "value": 1, "enabled": true },
     { "section": "OS Recovery",         "description": "OS: Hide recovery page",          "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSHideRecoveryPage",             "type": "DWord", "value": 1, "enabled": true },
-    { "section": "OS Recovery",         "description": "OS: Require Entra backup",        "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSRequireActiveDirectoryBackup", "type": "DWord", "value": 1, "enabled": true },
+    { "section": "OS Recovery",         "description": "OS: Require Entra backup",        "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "OSRequireActiveDirectoryBackup", "type": "DWord", "value": 0, "enabled": true },
 
     { "section": "Fixed Data Recovery", "description": "Fixed: Recovery enabled",         "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVRecovery",                     "type": "DWord", "value": 1, "enabled": true },
     { "section": "Fixed Data Recovery", "description": "Fixed: Allow recovery password",  "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVRecoveryPassword",             "type": "DWord", "value": 2, "enabled": true },
@@ -33,7 +33,7 @@
     { "section": "Fixed Data Recovery", "description": "Fixed: No DRA",                   "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVManageDRA",                    "type": "DWord", "value": 0, "enabled": true },
     { "section": "Fixed Data Recovery", "description": "Fixed: Backup to Entra/AD",       "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVActiveDirectoryBackup",        "type": "DWord", "value": 1, "enabled": true },
     { "section": "Fixed Data Recovery", "description": "Fixed: Store passwords+packages", "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVActiveDirectoryInfoToStore",   "type": "DWord", "value": 1, "enabled": true },
-    { "section": "Fixed Data Recovery", "description": "Fixed: Require Entra backup",     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVRequireActiveDirectoryBackup", "type": "DWord", "value": 1, "enabled": true },
+    { "section": "Fixed Data Recovery", "description": "Fixed: Require Entra backup",     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVRequireActiveDirectoryBackup", "type": "DWord", "value": 0, "enabled": true },
     { "section": "Fixed Data Recovery", "description": "Fixed: Cert-based auto-unlock",   "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVAllowUserCert",                "type": "DWord", "value": 1, "enabled": true },
     { "section": "Fixed Data Recovery", "description": "Fixed: No BL To Go reader",       "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVNoBitLockerToGoReader",        "type": "DWord", "value": 1, "enabled": true },
     { "section": "Fixed Data Recovery", "description": "Fixed: Deny write unprotected",   "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\FVE", "name": "FDVDenyWriteAccess",              "type": "DWord", "value": 1, "enabled": true },

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "IT-SharePoint_Developer",
+  "displayName": "SharePoint Developer",
+  "department": "IT",
+  "source": {
+    "snapshotFile": "IT.json",
+    "searchBase": "OU=RBAC_IT_ML Users,OU=ML Users,OU=IT,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac.sharedev"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=Data Warehouse Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=DruvaADSync,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Default-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Temp Users,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": []
+  }
+}

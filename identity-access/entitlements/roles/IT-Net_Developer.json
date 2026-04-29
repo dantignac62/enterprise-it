@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "IT-Net_Developer",
+  "displayName": ".Net Developer",
+  "department": "IT",
+  "source": {
+    "snapshotFile": "IT.json",
+    "searchBase": "OU=RBAC_IT_ML Users,OU=ML Users,OU=IT,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_netdev"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=BI_BT,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ILIS Dev,OU=ILIS Non Prod Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-DATAENTRY-eReq,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-DATAENTRY,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Default-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=SQL_MHSIMS_DEV_MH,OU=SQL Security Groups,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": []
+  }
+}

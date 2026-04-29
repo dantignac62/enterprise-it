@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Clinical_Affairs-Sales_Training_Manager",
+  "displayName": "Sales Training Manager",
+  "department": "Clinical_Affairs",
+  "source": {
+    "snapshotFile": "Clinical_Affairs.json",
+    "searchBase": "OU=Temp_RBAC_ClinicalAffairs_Users,OU=ClinicalAffairs_Users,OU=Clinical Affairs,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_stm"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=BI_ClinicalAffairs,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Authentication,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_CI_Clinical_Education,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Clinical_Education_Research_Training,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Clinical_References,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Education_Publish,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Marketing_Publish,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Millennium_Connect_Publish,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_NHST,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Sales_Reps,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=EDUCATION AND TRAINING,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ILIS Prod,OU=ILIS Prod Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ppshareusers,OU=Proofpoint,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=PRC Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Read-Only Sales Roster Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Sales Roster Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=San Diego Leadership,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Default-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Building 2,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Clinical Affairs,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Education Ambassadors,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Learn,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=MH Webinar,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health Core Training Committee,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Sales Status Changes,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Speaker Bureau,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Weekly Educational Moments,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Weekly Email Distribution,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

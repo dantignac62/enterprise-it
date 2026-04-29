@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "HR-HR_And_Benefits_Representative",
+  "displayName": "HR & Benefits Representative",
+  "department": "HR",
+  "source": {
+    "snapshotFile": "HR.json",
+    "searchBase": "OU=Temp_RBAC_HumanResources_Users,OU=HumanResources_Users,OU=Human Resources,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_hrbr"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=Accident and Near-Miss Reports 2019 Shared Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=HR Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=HR SoftSkills Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=HR Team,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF HR,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_AP_Approval,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=San Diego Leadership,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Shared Drive Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Generic-Phone-Fax-Email-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Building 2,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=HRDocuSign,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Sales Status Changes,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Wellness Committee,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

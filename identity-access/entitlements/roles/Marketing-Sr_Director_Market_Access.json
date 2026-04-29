@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Marketing-Sr_Director_Market_Access",
+  "displayName": "Sr. Director, Market Access",
+  "department": "Marketing",
+  "source": {
+    "snapshotFile": "Marketing.json",
+    "searchBase": "OU=Temp_RBAC_ManageCare_Users,OU=MarketAccess_Users,OU=Market Access,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac.srdirctmarkacc"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=BI_ManagedMarkets,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Authentication,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_FSS_Publish,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Managed_Markets_Publish,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Managed_Markets,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Sales_Reps,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_TM,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Contracts Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Data Services Excel Data Sets Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Read-Only Sales Roster Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Salesforce Inbox O365 Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Sales-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=TableauAdmin,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Field Employees,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

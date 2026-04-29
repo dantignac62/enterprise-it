@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Sales-Territory_Manager",
+  "displayName": "Territory Manager",
+  "department": "Sales",
+  "source": {
+    "snapshotFile": "Sales.json",
+    "searchBase": "OU=Temp_RBAC_Sales_Users,OU=Sales_Users,OU=Sales,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_tm1",
+      "rbac_tm2",
+      "rbac_tm3"
+    ],
+    "mergeStrategy": "intersection",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Authentication,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Sales_Reps,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ILIS Prod,OU=ILIS Prod Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MLVPN,OU=VPN Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Sales-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Field Employees,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  },
+  "variance": {
+    "securityGroupsAnyOf": [
+      {
+        "dn": "CN=BTC_AM,OU=Security Groups,DC=mlabs,DC=com",
+        "presentIn": [
+          "rbac_tm1"
+        ]
+      },
+      {
+        "dn": "CN=BTC_TM,OU=Security Groups,DC=mlabs,DC=com",
+        "presentIn": [
+          "rbac_tm2",
+          "rbac_tm3"
+        ]
+      },
+      {
+        "dn": "CN=MH Reps,OU=Security Groups,DC=mlabs,DC=com",
+        "presentIn": [
+          "rbac_tm1",
+          "rbac_tm2"
+        ]
+      }
+    ],
+    "distributionGroupsAnyOf": [
+      {
+        "dn": "CN=LSA Territory Managers,OU=Distribution Groups,DC=mlabs,DC=com",
+        "presentIn": [
+          "rbac_tm3"
+        ]
+      }
+    ]
+  }
+}

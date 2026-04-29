@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Billing-Coding_and_Error_Processing_Specialist",
+  "displayName": "Coding and Error Processing Specialist",
+  "department": "Billing",
+  "source": {
+    "snapshotFile": "Billing.json",
+    "searchBase": "OU=Temp_RBAC_Billing_Users,OU=Billing_Users,OU=Billing,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_ceps"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=Biscom URGENT,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ILIS Prod,OU=ILIS Prod Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RC_File_Room,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RC_Medicaid_Read_Only,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RC_PFP_ACCESS,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RevCycle_Limited,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-DATAENTRY-eReq,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-DATAENTRY,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve MedRecords,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFWF InsuranceSpecialists,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Default-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Revenue Cycle All Employees B7,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

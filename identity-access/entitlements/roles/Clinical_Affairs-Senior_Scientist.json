@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Clinical_Affairs-Senior_Scientist",
+  "displayName": "Senior Scientist",
+  "department": "Clinical_Affairs",
+  "source": {
+    "snapshotFile": "Clinical_Affairs.json",
+    "searchBase": "OU=Temp_RBAC_ClinicalAffairs_Users,OU=ClinicalAffairs_Users,OU=Clinical Affairs,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_srscientist"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=ACTR&D_Team,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BI_LabOperations,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BI_R&D,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Duo R&D,OU=Duo Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=KB SharePoint Visitor,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=R & D Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=R&D,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Generic-Phone-Fax-Email-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=SSRS MLIS Reports Lab Folder,OU=SQL Security Groups,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Building 2,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Morale Committee Events,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=R&D Drug Testing,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

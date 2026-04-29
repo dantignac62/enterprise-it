@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Clinical_Affairs-Document_Control_Coordinator",
+  "displayName": "Document Control Coordinator",
+  "department": "Clinical_Affairs",
+  "source": {
+    "snapshotFile": "Clinical_Affairs.json",
+    "searchBase": "OU=Temp_RBAC_ClinicalAffairs_Users,OU=ClinicalAffairs_Users,OU=Clinical Affairs,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_dcc"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=BI_LabOperations,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=DOCUMENT CONTROL Folder Access - Genetics,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Document Control Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Document Control,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=JDs Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Lab Document Control Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LabDR,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=List-Only Genetics Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=List-Only Shared Drive Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Quality Systems,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Read-Only Document Control Genetics Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Regulatory Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Generic-Phone-Fax-Email-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Building 2,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Training Completion Records,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

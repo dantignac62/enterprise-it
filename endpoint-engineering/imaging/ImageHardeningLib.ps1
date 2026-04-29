@@ -103,7 +103,7 @@ function Initialize-HardeningLog {
 
     $script:Component = $Component
     $script:QuietMode = [bool]$Quiet
-    $script:Counters  = @{ Applied = 0; Skipped = 0; Warned = 0; Errors = 0 }
+    $script:Counters  = @{ Applied = 0; Skipped = 0; SkippedByManifest = 0; Warned = 0; Errors = 0 } 
 
     # Resolve relative paths against current working directory
     if (-not [System.IO.Path]::IsPathRooted($LogPath)) {

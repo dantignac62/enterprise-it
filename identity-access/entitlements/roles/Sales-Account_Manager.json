@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Sales-Account_Manager",
+  "displayName": "Account Manager",
+  "department": "Sales",
+  "source": {
+    "snapshotFile": "Sales.json",
+    "searchBase": "OU=Temp_RBAC_Sales_Users,OU=Sales_Users,OU=Sales,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_am1",
+      "rbac_am2",
+      "rbac_am3"
+    ],
+    "mergeStrategy": "intersection",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_AM,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Authentication,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Sales_Reps,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ILIS Prod,OU=ILIS Prod Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH Reps,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MLVPN,OU=VPN Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Sales-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Field Employees,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  },
+  "variance": {
+    "securityGroupsAnyOf": [
+      {
+        "dn": "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+        "presentIn": [
+          "rbac_am2"
+        ]
+      },
+      {
+        "dn": "CN=SalesForceUsers,OU=Security Groups,DC=mlabs,DC=com",
+        "presentIn": [
+          "rbac_am2"
+        ]
+      }
+    ],
+    "distributionGroupsAnyOf": []
+  }
+}

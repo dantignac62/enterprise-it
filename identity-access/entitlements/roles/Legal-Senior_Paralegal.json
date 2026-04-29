@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Legal-Senior_Paralegal",
+  "displayName": "Senior Paralegal",
+  "department": "Legal",
+  "source": {
+    "snapshotFile": "Legal.json",
+    "searchBase": "OU=Temp_RBAC_Legal_Users,OU=Legal_Users,OU=Legal,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac.srparalegal"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=AD_BUSINESS_ANALYTICS,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_BUSINESS_TECH,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_CLINOPS,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_COMMUNICATIONS,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_COMMUNITY_STRATEGICAFFAIRS,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_COMPLIANCE,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_CONTRACT_MANAGER,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_CREATIVE,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_EDUCATION,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_EMERGING_OPPS,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_EVENTS_CONVENTIONS,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_FACILITIES,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_FINANCE_ACCOUNTING,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_FINANCE_BILLING,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_GLOBAL_DEFENSE,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_GOVT_AFFAIRS,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_HR,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_LEGAL,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_LOGISTICS,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_MANAGED_CARE,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_MARKETING,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_PURCHASING,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_SALESOPS,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AD_TRAVEL_HOSPITALITY,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BI_Legal,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Authentication,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_CI_Compliance_Legal,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Compliance_Legal,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Commission Files Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Contracts Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Creative Drive Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Cup Program Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=DCM_ClinOps Mgr,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=DCM_Legal,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=DCM_Strat_Comm Mgr,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Discovery Management,OU=Microsoft Exchange Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve SalesSupport,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=List-Only Billing Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=List-only Private Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=List-Only SalesOps Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LSA Program Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=M&A Projects Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=NMHCo\\, Inc. - Corporate Secretary Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Generic-Phone-Fax-Email-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=BBB Contact,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Project Levis,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Project Mercury,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

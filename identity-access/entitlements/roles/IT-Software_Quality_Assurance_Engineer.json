@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "IT-Software_Quality_Assurance_Engineer",
+  "displayName": "Software Quality Assurance Engineer",
+  "department": "IT",
+  "source": {
+    "snapshotFile": "IT.json",
+    "searchBase": "OU=RBAC_IT_ML Users,OU=ML Users,OU=IT,DC=mlabs,DC=com",
+    "templateUsers": [
+      "RBAC_SQAE"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=AWS-769914725803-ADFS-Admin,OU=AWS Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=AWS-769914725803-ADFS-S3-Admin,OU=AWS Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BI_BT,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BI_QA,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Data Warehouse Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Duo Atlassian Cloud Users,OU=Duo Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Duo MFA Test,OU=Duo Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Duo SalesForce Users,OU=Duo Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=DWBI Dev,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=DWBI QA,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ILIS Dev,OU=ILIS Non Prod Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ILIS QA,OU=ILIS Non Prod Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ILIS Sales User Dev,OU=ILIS Non Prod Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ILIS Sales User QA,OU=ILIS Non Prod Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=IT-Dev,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Jira User Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=List-Only Data Warehouse Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=List-Only MLIS Interface Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=List-Only MLISExport Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=PSA QA,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=RDS Non-Admins,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Read-Only UHC Archive,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Read-Only UHC Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=SN Data Warehouse,OU=ServiceNow Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=SQL_BT_QA_PRIMERO,OU=SQL Security Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=TableauAdmin,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=BI Support,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=CD Merge Complete,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=MH Software Release,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=MHDL,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Legal-Legal_Assistant",
+  "displayName": "Legal Assistant",
+  "department": "Legal",
+  "source": {
+    "snapshotFile": "Legal.json",
+    "searchBase": "OU=Temp_RBAC_Legal_Users,OU=Legal_Users,OU=Legal,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac.legalasst"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Authentication,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Contracts Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Contracts Payor Relations,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_PGTLab,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RC_Supervisor,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RevCycle_Full,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFBILLING_Accession_Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFBilling-SS Read Only,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFCash-Leads,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-DATAENTRY-eReq,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-DATAENTRY,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-SUPERVISOR,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve EOBs,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve MedRecords,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve SalesSupport,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFScan MedRecords,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFWF Cash Management Supervisors,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=List-Only Billing Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Read-Only Sales Roster Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Generic-Phone-Fax-Email-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Bluffs ASR,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Payor Relations,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

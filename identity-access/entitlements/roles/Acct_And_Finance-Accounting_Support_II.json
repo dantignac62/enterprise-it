@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Acct_And_Finance-Accounting_Support_II",
+  "displayName": "Accounting Support II",
+  "department": "Acct_And_Finance",
+  "source": {
+    "snapshotFile": "Acct-&-Finance.json",
+    "searchBase": "OU=Temp_RBAC_Acct_Fin_Users,OU=AcctgFinance_Users,OU=Acctg And Finance,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_acct_suppII"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=Accounting Check Copier,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Accounting Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Accounting MONTH END Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Accounting Rent Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=GPSshare Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_AP_Processing,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Default-Ext-Fax-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=SmartConnectUsers,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Great Plains Users,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

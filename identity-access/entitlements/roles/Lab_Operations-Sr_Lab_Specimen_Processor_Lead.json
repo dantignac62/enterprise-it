@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Lab_Operations-Sr_Lab_Specimen_Processor_Lead",
+  "displayName": "Sr. Lab Specimen Processor Lead",
+  "department": "Lab_Operations",
+  "source": {
+    "snapshotFile": "Lab_Operations.json",
+    "searchBase": "OU=Temp_RBAC_LabOperations_Users,OU=LabOperations_Users,OU=Lab Operations,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_slspl"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=Admin Dept Laserfiche Workflow Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Audits Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BI_LabOperations,OU=BI,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BLOCKYOUTUBE,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BMRAM Application,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=JDs Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_Lab_Ereq_Import,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_PGTLab,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_QFAdmin_Delete,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_QFAdmin,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-DATAENTRY-eReq,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-DATAENTRY-Scan,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-DATAENTRY,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFLAB-SUPERVISOR,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve MedRecords,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFScan MedRecords,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LSP Lead Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LSP Leads,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Read-Only Lab Document Control Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Default-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=SRD Leads Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=SSRS MLIS Reports Data Entry Reporting Folder,OU=SQL Security Groups,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Building 1,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Lean Cellular Design Team,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=LSP Team 3,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

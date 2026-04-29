@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Clinical_Affairs-Toxicologist",
+  "displayName": "Toxicologist",
+  "department": "Clinical_Affairs",
+  "source": {
+    "snapshotFile": "Clinical_Affairs.json",
+    "searchBase": "OU=Temp_RBAC_ClinicalAffairs_Users,OU=ClinicalAffairs_Users,OU=Clinical Affairs,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_toxicologist"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Authentication,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Clinical_References,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=KB SharePoint Visitor,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Default-Ext-Fax-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Clinical Affairs,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Field Employees,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Journal Club,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Right Find Access,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Tox,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

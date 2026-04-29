@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Sales-Senior_Vice_President_Sales",
+  "displayName": "Senior Vice President, Sales",
+  "department": "Sales",
+  "source": {
+    "snapshotFile": "Sales.json",
+    "searchBase": "OU=Temp_RBAC_Sales_Users,OU=Sales_Users,OU=Sales,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_svps"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Authentication,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_CI_Managers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Managers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=BTC_Sales_Reps,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Data Services Excel Data Sets Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Financial Review Data Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ILIS Prod,OU=ILIS Prod Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=List-Only Data Services Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=MH WLAN Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=PRC Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Sales Managers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Sales Roster Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Signature-Default-Ext-Cell-O365,OU=Signature-O365,OU=Signatures,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=SP_EMR Read,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=TableauAdmin,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Alpha Team,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Blitz Veterans,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Corporate Sponsorship Committee,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Field Employees,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Field Monitoring Summary,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Great Lakes Region,OU=Sales Great Lakes Region,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Leakage List Distribution,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=MH Leaders,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=MH Senior Leadership,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Mid South Region,OU=Sales Mid South Region,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Playbook Showdown,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Sales Leadership,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Sales Training Presenters,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=UHC Reps,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=WC Account Managers,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=WC Territory Managers,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Web Leads,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}

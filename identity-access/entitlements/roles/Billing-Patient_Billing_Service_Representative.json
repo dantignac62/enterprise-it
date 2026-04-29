@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0",
+  "roleId": "Billing-Patient_Billing_Service_Representative",
+  "displayName": "Patient Billing Service Representative",
+  "department": "Billing",
+  "source": {
+    "snapshotFile": "Billing.json",
+    "searchBase": "OU=Temp_RBAC_Billing_Users,OU=Billing_Users,OU=Billing,DC=mlabs,DC=com",
+    "templateUsers": [
+      "rbac_pbsr"
+    ],
+    "mergeStrategy": "single",
+    "generatedAt": "2026-04-29T10:20:59.3870422Z",
+    "generatedBy": "Convert-EntitlementSnapshot.ps1@5002a0d"
+  },
+  "entitlements": {
+    "securityGroups": [
+      "CN=BiscomUsers,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Credit Card Payments Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Customer Service Folder Access Billing,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=FAB Five Shared Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Insurance Website Spreadsheet Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LF_RevCycle_Limited,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFBILLING_Accession_Access,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve EOBs,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFRetrieve MedRecords,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFScan MedRecords,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFWF Cash Management Users,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=LFWF InsuranceSpecialists,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=ppshareusers,OU=Proofpoint,OU=Security Groups,DC=mlabs,DC=com",
+      "CN=Read-Only DRS for Patients Folder Access,OU=Access Groups,OU=Security Groups,DC=mlabs,DC=com"
+    ],
+    "distributionGroups": [
+      "CN=Millennium Health,OU=Distribution Groups,DC=mlabs,DC=com",
+      "CN=Revenue Cycle All Employees B7,OU=Distribution Groups,DC=mlabs,DC=com"
+    ]
+  }
+}
