@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enterprise-it/imaging/manifests/Set-BitLockerConfig.manifest.schema.json",
+  "title": "BitLocker FVE Policy Manifest",
+  "description": "Switch-style manifest schema for Set-BitLockerConfig.ps1.",
+  "type": "object",
+  "required": ["name", "version", "registrySettings"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema":         { "type": "string" },
+    "name":            { "type": "string", "const": "BitLockerConfig" },
+    "version":         { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "description":     { "type": "string" },
+    "lastModifiedUtc": { "type": "string", "format": "date-time" },
+
+    "registrySettings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["section", "description", "path", "name", "type", "value", "enabled"],
+        "additionalProperties": false,
+        "properties": {
+          "section":     { "type": "string" },
+          "description": { "type": "string" },
+          "path":        { "type": "string", "pattern": "^HK(LM|CU):" },
+          "name":        { "type": "string", "minLength": 1 },
+          "type":        { "type": "string", "enum": ["DWord", "QWord", "String", "ExpandString", "MultiString", "Binary"] },
+          "value": {
+            "oneOf": [
+              { "type": "integer" },
+              { "type": "string" },
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "array", "items": { "type": "integer", "minimum": 0, "maximum": 255 } }
+            ]
+          },
+          "enabled":     { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

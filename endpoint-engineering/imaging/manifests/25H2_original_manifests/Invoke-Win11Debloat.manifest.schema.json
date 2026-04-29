@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enterprise-it/imaging/manifests/Invoke-Win11Debloat.manifest.schema.json",
+  "title": "Win11 Debloat Manifest",
+  "description": "Switch-style manifest schema for Invoke-Win11Debloat.ps1.",
+  "type": "object",
+  "required": ["name", "version", "appx", "optionalFeatures", "services", "scheduledTasks", "registrySettings"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema":         { "type": "string" },
+    "name":            { "type": "string", "const": "Win11Debloat" },
+    "version":         { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "description":     { "type": "string" },
+    "lastModifiedUtc": { "type": "string", "format": "date-time" },
+
+    "appx": {
+      "type": "object",
+      "required": ["protect", "allow"],
+      "additionalProperties": false,
+      "properties": {
+        "protect": { "$ref": "#/$defs/patternList" },
+        "allow":   { "$ref": "#/$defs/patternList" }
+      }
+    },
+
+    "optionalFeatures": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/namedToggle" }
+    },
+
+    "services": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/namedToggle" }
+    },
+
+    "scheduledTasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "description", "enabled"],
+        "additionalProperties": false,
+        "properties": {
+          "path":        { "type": "string", "pattern": "^\\\\" },
+          "description": { "type": "string" },
+          "enabled":     { "type": "boolean" }
+        }
+      }
+    },
+
+    "registrySettings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/registrySetting" }
+    }
+  },
+
+  "$defs": {
+    "patternList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["pattern", "description", "enabled"],
+        "additionalProperties": false,
+        "properties": {
+          "pattern":     { "type": "string", "minLength": 1 },
+          "description": { "type": "string" },
+          "enabled":     { "type": "boolean" }
+        }
+      }
+    },
+    "namedToggle": {
+      "type": "object",
+      "required": ["name", "description", "enabled"],
+      "additionalProperties": false,
+      "properties": {
+        "name":        { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "enabled":     { "type": "boolean" }
+      }
+    },
+    "registrySetting": {
+      "type": "object",
+      "required": ["description", "path", "name", "type", "value", "enabled"],
+      "additionalProperties": false,
+      "properties": {
+        "section":     { "type": "string" },
+        "description": { "type": "string" },
+        "path":        { "type": "string", "pattern": "^HK(LM|CU):" },
+        "name":        { "type": "string", "minLength": 1 },
+        "type":        { "type": "string", "enum": ["DWord","QWord","String","ExpandString","MultiString","Binary"] },
+        "value": {
+          "oneOf": [
+            { "type": "integer" },
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "array", "items": { "type": "integer", "minimum": 0, "maximum": 255 } }
+          ]
+        },
+        "enabled":     { "type": "boolean" }
+      }
+    }
+  }
+}

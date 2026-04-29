@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enterprise-it/imaging/manifests/Set-CISL1Hardening.manifest.schema.json",
+  "title": "CIS L1 Hardening Manifest",
+  "description": "Switch-style manifest schema for Set-CISL1Hardening.ps1.",
+  "type": "object",
+  "required": ["name", "version", "registrySettings", "services", "notes"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema":         { "type": "string" },
+    "name":            { "type": "string", "const": "CISL1Hardening" },
+    "version":         { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "baseline":        { "type": "string" },
+    "lastModifiedUtc": { "type": "string", "format": "date-time" },
+    "description":     { "type": "string" },
+
+    "registrySettings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/registrySetting" }
+    },
+    "services": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/serviceEntry" }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/noteEntry" }
+    }
+  },
+
+  "$defs": {
+    "registrySetting": {
+      "type": "object",
+      "required": ["section", "cisRef", "description", "path", "name", "type", "value", "enabled"],
+      "additionalProperties": false,
+      "properties": {
+        "section":     { "type": "string" },
+        "cisRef":      { "type": "string" },
+        "description": { "type": "string" },
+        "path":        { "type": "string", "pattern": "^HK(LM|CU):" },
+        "name":        { "type": "string" },
+        "type":        { "type": "string", "enum": ["DWord","QWord","String","ExpandString","MultiString","Binary"] },
+        "value": {
+          "description": "DWord/QWord -> integer; String/ExpandString -> string; MultiString -> array of strings; Binary -> array of integers (bytes).",
+          "oneOf": [
+            { "type": "integer" },
+            { "type": "string" },
+            { "type": "array",  "items": { "type": "string" } },
+            { "type": "array",  "items": { "type": "integer", "minimum": 0, "maximum": 255 } }
+          ]
+        },
+        "enabled":     { "type": "boolean" }
+      }
+    },
+    "serviceEntry": {
+      "type": "object",
+      "required": ["section", "cisRef", "description", "name", "enabled"],
+      "additionalProperties": false,
+      "properties": {
+        "section":     { "type": "string" },
+        "cisRef":      { "type": "string" },
+        "description": { "type": "string" },
+        "name":        { "type": "string", "minLength": 1 },
+        "enabled":     { "type": "boolean" }
+      }
+    },
+    "noteEntry": {
+      "type": "object",
+      "required": ["cisRef", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "cisRef":      { "type": "string" },
+        "description": { "type": "string" }
+      }
+    }
+  }
+}

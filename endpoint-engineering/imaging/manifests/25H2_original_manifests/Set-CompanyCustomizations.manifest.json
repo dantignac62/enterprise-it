@@ -1,0 +1,70 @@
+{
+  "$schema": "./Set-CompanyCustomizations.manifest.schema.json",
+  "name": "CompanyCustomizations",
+  "version": "1.0.0",
+  "description": "Switch-style manifest for company-specific image customizations beyond CIS L1. Each entry has 'enabled' (bool); set false to skip while preserving the audit trail (recorded as SKIPPED_BY_MANIFEST). Sections: registrySettings (HKLM + HKCU writes), services (Set-Service startup type, with optional startAfter for services that must be running for the configuration to take effect), defaultProfile (writes into the default user NTUSER.DAT and folder cleanup so new users created after sysprep inherit the configuration), oneDriveWin32Uninstall (gate on running OneDriveSetup.exe /uninstall).",
+  "lastModifiedUtc": "2026-04-26T00:00:00Z",
+
+  "registrySettings": [
+    { "section": "Microsoft Edge",        "description": "Edge: Skip first-run wizard",                          "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge", "name": "HideFirstRunExperience",                        "type": "DWord",  "value": 1,             "enabled": true },
+    { "section": "Microsoft Edge",        "description": "Edge: Do not auto-import from other browsers",         "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge", "name": "AutoImportAtFirstRun",                          "type": "DWord",  "value": 4,             "enabled": true },
+    { "section": "Microsoft Edge",        "description": "Edge: No default-browser prompt",                      "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge", "name": "DefaultBrowserSettingEnabled",                  "type": "DWord",  "value": 0,             "enabled": true },
+    { "section": "Microsoft Edge",        "description": "Edge: Disable usage/crash metrics",                    "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge", "name": "MetricsReportingEnabled",                       "type": "DWord",  "value": 0,             "enabled": true },
+    { "section": "Microsoft Edge",        "description": "Edge: Disable ad personalization telemetry",           "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge", "name": "PersonalizationReportingEnabled",               "type": "DWord",  "value": 0,             "enabled": true },
+    { "section": "Microsoft Edge",        "description": "Edge: Diagnostic data off",                            "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge", "name": "DiagnosticData",                                "type": "DWord",  "value": 0,             "enabled": true },
+    { "section": "Microsoft Edge",        "description": "Edge: No site info to Microsoft",                      "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge", "name": "SendSiteInfoToImproveServices",                 "type": "DWord",  "value": 0,             "enabled": true },
+    { "section": "Microsoft Edge",        "description": "Edge: Disable shopping assistant",                     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge", "name": "EdgeShoppingAssistantEnabled",                  "type": "DWord",  "value": 0,             "enabled": true },
+    { "section": "Microsoft Edge",        "description": "Edge: Disable startup boost (background preload)",     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge", "name": "StartupBoostEnabled",                           "type": "DWord",  "value": 0,             "enabled": true },
+    { "section": "Microsoft Edge",        "description": "Edge: Disable Copilot/Discover sidebar",               "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge", "name": "HubsSidebarEnabled",                            "type": "DWord",  "value": 0,             "enabled": true },
+    { "section": "Microsoft Edge",        "description": "Edge: Disable spotlight recommendations",              "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge", "name": "SpotlightExperiencesAndRecommendationsEnabled", "type": "DWord",  "value": 0,             "enabled": true },
+
+    { "section": "Windows Search",        "description": "Search: Disable web search",                           "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search", "name": "DisableWebSearch",          "type": "DWord",  "value": 1,             "enabled": true },
+    { "section": "Windows Search",        "description": "Search: No web-connected search",                      "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search", "name": "ConnectedSearchUseWeb",     "type": "DWord",  "value": 0,             "enabled": true },
+    { "section": "Windows Search",        "description": "Search: No cloud search",                              "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search", "name": "AllowCloudSearch",          "type": "DWord",  "value": 0,             "enabled": true },
+    { "section": "Windows Search",        "description": "Search: No location for search",                       "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search", "name": "AllowSearchToUseLocation",  "type": "DWord",  "value": 0,             "enabled": true },
+    { "section": "Windows Search",        "description": "Search: No Bing suggestions in search box",            "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",       "name": "DisableSearchBoxSuggestions","type": "DWord", "value": 1,             "enabled": true },
+    { "section": "Windows Search",        "description": "Search: No web content in search bar (25H2)",          "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search", "name": "EnableDynamicContentInWSB", "type": "DWord",  "value": 0,             "enabled": true },
+
+    { "section": "Automatic Time Zone",   "description": "lfsvc service registry: Manual/Trigger (auto-TZ override of CIS 5.18)", "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\lfsvc",        "name": "Start", "type": "DWord", "value": 3, "enabled": true },
+    { "section": "Automatic Time Zone",   "description": "tzautoupdate service registry: Manual/Trigger",                           "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\tzautoupdate", "name": "Start", "type": "DWord", "value": 3, "enabled": true },
+    { "section": "Automatic Time Zone",   "description": "Location consent (HKLM master): Allow",                                   "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",            "name": "Value", "type": "String", "value": "Allow", "enabled": true },
+    { "section": "Automatic Time Zone",   "description": "Location consent (HKCU master): Allow (current audit-mode user)",         "path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",            "name": "Value", "type": "String", "value": "Allow", "enabled": true },
+    { "section": "Automatic Time Zone",   "description": "Desktop app location (HKLM): Allow (NonPackaged = Win32/svchost)",        "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location\\NonPackaged","name": "Value", "type": "String", "value": "Allow", "enabled": true },
+    { "section": "Automatic Time Zone",   "description": "Desktop app location (HKCU): Allow",                                      "path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location\\NonPackaged","name": "Value", "type": "String", "value": "Allow", "enabled": true },
+    { "section": "Automatic Time Zone",   "description": "Location sensor permission: enabled (Windows Location Provider GUID)",   "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Sensor\\Overrides\\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}", "name": "SensorPermissionState", "type": "DWord", "value": 1, "enabled": true },
+    { "section": "Automatic Time Zone",   "description": "Location policy: not force-disabled",                                     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors", "name": "DisableLocation",                "type": "DWord", "value": 0, "enabled": true },
+    { "section": "Automatic Time Zone",   "description": "Location policy: Windows provider not force-disabled",                    "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors", "name": "DisableWindowsLocationProvider", "type": "DWord", "value": 0, "enabled": true },
+    { "section": "Automatic Time Zone",   "description": "Location policy: scripting not force-disabled",                            "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors", "name": "DisableLocationScripting",       "type": "DWord", "value": 0, "enabled": true },
+
+    { "section": "Delivery Optimization", "description": "DO: HTTP only, no peer-to-peer (DODownloadMode=0)",     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization", "name": "DODownloadMode",       "type": "DWord", "value": 0, "enabled": true },
+    { "section": "Delivery Optimization", "description": "DO: Zero upload bandwidth",                             "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization", "name": "DOMaxUploadBandwidth", "type": "DWord", "value": 0, "enabled": true },
+
+    { "section": "OneDrive",              "description": "OneDrive: Disable file sync (machine-wide)",            "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\OneDrive", "name": "DisableFileSyncNGSC",                "type": "DWord", "value": 1, "enabled": true },
+    { "section": "OneDrive",              "description": "OneDrive: Do not default-save to OneDrive",             "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\OneDrive", "name": "DisableLibrariesDefaultSaveToOneDrive","type": "DWord", "value": 0, "enabled": true },
+    { "section": "OneDrive",              "description": "OneDrive: No pre-sign-in network traffic",              "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\OneDrive", "name": "PreventNetworkTrafficPreUserSignIn", "type": "DWord", "value": 1, "enabled": true },
+
+    { "section": "PowerShell",            "description": "PS ExecutionPolicy: policy enabled",                    "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell", "name": "EnableScripts",    "type": "DWord",  "value": 1,            "enabled": true },
+    { "section": "PowerShell",            "description": "PS ExecutionPolicy: RemoteSigned (machine policy)",     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell", "name": "ExecutionPolicy", "type": "String", "value": "RemoteSigned", "enabled": true }
+  ],
+
+  "services": [
+    { "section": "Automatic Time Zone", "name": "lfsvc",        "description": "Geolocation service - overrides CIS 5.18 default; required for auto-TZ. startAfter=true so the service is running when CamSvc re-reads consent.", "startupType": "Manual", "startAfter": true,  "enabled": true },
+    { "section": "Automatic Time Zone", "name": "tzautoupdate", "description": "Time Zone Auto Update - trigger-start, fires when lfsvc delivers a location-change event.",                                                            "startupType": "Manual", "startAfter": false, "enabled": true }
+  ],
+
+  "defaultProfile": {
+    "registrySettings": [
+      { "subKey": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",             "name": "Value", "type": "String", "value": "Allow", "description": "Default profile: location consent master Allow (so new users post-sysprep inherit it)",      "enabled": true },
+      { "subKey": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location\\NonPackaged","name": "Value", "type": "String", "value": "Allow", "description": "Default profile: NonPackaged (Win32/svchost) location consent Allow", "enabled": true }
+    ],
+    "foldersToRemove": [
+      { "relativePath": "OneDrive",                            "description": "OneDrive root in Users\\Default", "enabled": true },
+      { "relativePath": "AppData\\Local\\Microsoft\\OneDrive", "description": "OneDrive AppData in Users\\Default", "enabled": true }
+    ]
+  },
+
+  "oneDriveWin32Uninstall": {
+    "description": "Uninstall the per-machine OneDriveSetup.exe Win32 client (separate from the AppX/MSIX package handled by Invoke-Win11Debloat).",
+    "enabled": true
+  }
+}
