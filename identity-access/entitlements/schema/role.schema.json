@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mlabs.local/schemas/role.schema.json",
+  "title": "Role definition",
+  "description": "Normalized role definition consumed by lifecycle scripts. One file per role, derived from the per-department snapshots in this directory. All access (including M365 license SKUs via group-based licensing) is modeled as AD security or distribution group membership; no separate license or Entra-group fields.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "roleId",
+    "displayName",
+    "department",
+    "source",
+    "entitlements"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "description": "Schema contract version. Bump on any breaking change.",
+      "const": "1.0"
+    },
+    "roleId": {
+      "description": "Stable identifier. Filename-safe slug, conventionally '<Department>-<TitleSlug>'.",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]+$",
+      "minLength": 1
+    },
+    "displayName": {
+      "description": "Human-readable role name (typically the canonical JobTitle).",
+      "type": "string",
+      "minLength": 1
+    },
+    "department": {
+      "description": "Department slug derived from the source snapshot file.",
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "description": "Free-text notes (exceptions, rationale for manual edits, etc.).",
+      "type": "string"
+    },
+    "source": {
+      "description": "Provenance metadata. Tells reviewers where the entitlements came from and how they were merged.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshotFile",
+        "templateUsers",
+        "mergeStrategy",
+        "generatedAt",
+        "generatedBy"
+      ],
+      "properties": {
+        "snapshotFile": { "type": "string" },
+        "searchBase":   { "type": "string" },
+        "templateUsers": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "mergeStrategy": {
+          "description": "How per-user template entitlements were combined into the role.",
+          "enum": ["intersection", "union", "single"]
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "generatedBy": {
+          "description": "Tool identifier, e.g. 'Convert-EntitlementSnapshot.ps1@<gitSha>'.",
+          "type": "string"
+        }
+      }
+    },
+    "entitlements": {
+      "description": "Canonical AD group memberships granted by the role. M365 license SKUs are conferred indirectly via group-based licensing on entries in securityGroups; do not enumerate them separately.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["securityGroups", "distributionGroups"],
+      "properties": {
+        "securityGroups": {
+          "description": "AD security group DNs granted by the role.",
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "distributionGroups": {
+          "description": "AD distribution group DNs granted by the role.",
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "variance": {
+      "description": "Items present in some but not all source template users. Surfaces disagreement that the merge strategy dropped or kept; reviewers should reconcile.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "securityGroupsAnyOf":     { "$ref": "#/$defs/varianceList" },
+        "distributionGroupsAnyOf": { "$ref": "#/$defs/varianceList" }
+      }
+    }
+  },
+  "$defs": {
+    "varianceList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["dn", "presentIn"],
+        "properties": {
+          "dn": { "type": "string" },
+          "presentIn": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        }
+      }
+    }
+  }
+}
