@@ -1,9 +1,9 @@
 {
   "$schema": "./Set-CISL1Hardening.manifest.schema.json",
   "name": "CISL1Hardening",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "baseline": "CIS Microsoft Windows 11 Enterprise Benchmark v5.0.0 L1",
-  "lastModifiedUtc": "2026-04-26T00:00:00Z",
+  "lastModifiedUtc": "2026-05-15T00:00:00Z",
   "description": "Switch-style manifest for CIS L1 controls. Set 'enabled' to false on any entry to skip the control while preserving its presence in the audit trail (recorded as SKIPPED_BY_MANIFEST). Registry-only controls live in 'registrySettings'; service disablements live in 'services'; reminders for items that must be applied via GPO / Intune live in 'notes'.",
 
   "registrySettings": [
@@ -41,7 +41,7 @@
 
     { "section": "2.3.17 UAC",                "cisRef": "2.3.17.1",  "description": "UAC: Admin Approval for built-in",          "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "FilterAdministratorToken",   "type": "DWord", "value": 1,         "enabled": true },
     { "section": "2.3.17 UAC",                "cisRef": "2.3.17.2",  "description": "UAC: Prompt consent secure desktop",        "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "ConsentPromptBehaviorAdmin", "type": "DWord", "value": 2,         "enabled": true },
-    { "section": "2.3.17 UAC",                "cisRef": "2.3.17.3",  "description": "UAC: Auto deny standard users",             "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "ConsentPromptBehaviorUser",  "type": "DWord", "value": 0,         "enabled": true },
+    { "section": "2.3.17 UAC",                "cisRef": "2.3.17.3",  "description": "UAC: Auto deny standard users",             "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "ConsentPromptBehaviorUser",  "type": "DWord", "value": 1,         "enabled": true },
     { "section": "2.3.17 UAC",                "cisRef": "2.3.17.4",  "description": "UAC: Detect app installs",                  "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "EnableInstallerDetection",   "type": "DWord", "value": 1,         "enabled": true },
     { "section": "2.3.17 UAC",                "cisRef": "2.3.17.5",  "description": "UAC: Secure locations only",                "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "EnableSecureUIAPaths",       "type": "DWord", "value": 1,         "enabled": true },
     { "section": "2.3.17 UAC",                "cisRef": "2.3.17.6",  "description": "UAC: Admin Approval Mode",                  "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "EnableLUA",                  "type": "DWord", "value": 1,         "enabled": true },
