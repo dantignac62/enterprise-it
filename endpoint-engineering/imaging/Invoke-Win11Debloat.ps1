@@ -70,6 +70,10 @@ $manifest = Read-HardeningManifest -Path $ManifestPath `
 Write-Log "Manifest: $ManifestPath (v$($manifest.version))"
 Write-Log "OS Build: $((Get-CimInstance Win32_OperatingSystem).BuildNumber)"
 
+# Reference state snapshot BEFORE any changes (paired with the Post snapshot
+# at script end; the Post call also writes a delta of what this script changed).
+Save-HardeningSnapshot -Phase Pre | Out-Null
+
 # Contains-match against a list of -like patterns (preserves v3.0.0 semantics).
 # Patterns may include trailing or embedded * wildcards.
 function Test-AppxPatternMatch {
@@ -329,6 +333,9 @@ foreach ($r in $manifest.registrySettings) {
     Set-HardenedRegistry -Path $r.path -Name $r.name -Value $r.value `
         -Type $r.type -Description $r.description
 }
+
+# Reference state snapshot AFTER all changes; emits delta.json vs the Pre snapshot.
+Save-HardeningSnapshot -Phase Post | Out-Null
 
 Write-LogSummary -ScriptName 'Invoke-Win11Debloat'
 Write-Host '  Reboot recommended.' -ForegroundColor Yellow

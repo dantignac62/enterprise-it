@@ -15,10 +15,9 @@
 
     Executes, in order:
       1. Invoke-Win11Debloat.ps1
-      2. Set-CISL1Hardening.ps1
-      3. Set-CompanyCustomizations.ps1
-      4. Set-CipherSuiteHardening.ps1
-      5. Set-BitLockerConfig.ps1
+      2. Set-CompanyCustomizations.ps1
+      3. Set-CipherSuiteHardening.ps1
+      4. Set-BitLockerConfig.ps1
 
     A failure in one script is logged and the next still runs (failures
     do not abort the pipeline) - each area lands independently.
@@ -55,9 +54,15 @@
     Override for the evidence root. Default: .\Evidence
 
 .NOTES
-    Version : 2.1.0 | Date: 2026-04-26
+    Version : 2.2.0 | Date: 2026-04-26
     Target  : Windows 11 Enterprise 25H2 (Build 26200.x+)
     Changes :
+      2.2.0 - Removed the Set-CISL1Hardening.ps1 stage from the pipeline.
+              The CIS L1 stage no longer runs. Snapshot/delta/state-readback
+              helpers (Get-SystemStateSnapshot, Get-RegValue, ConvertTo-FlatDict,
+              Get-StateDelta) now live in ImageHardeningLib.ps1 and are
+              consumed here by dot-sourcing the library, so the pipeline-level
+              snapshot and each stage's per-script snapshot share one shape.
       2.1.0 - Added 'Disabled' counter column to the per-stage Pipeline
               table and SKIPPED_BY_MANIFEST tally to each stage's
               Change Ledger summary. Supports manifest-driven
@@ -84,6 +89,11 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+# Shared infrastructure. Provides the canonical Get-SystemStateSnapshot,
+# Get-RegValue, ConvertTo-FlatDict, and Get-StateDelta used below for the
+# pre/post pipeline snapshots (same implementation each child stage uses).
+. "$PSScriptRoot\ImageHardeningLib.ps1"
+
 if (-not $EvidencePath) {
     $EvidencePath = Join-Path $PSScriptRoot 'Evidence'
 }
@@ -102,13 +112,9 @@ function Get-FileSha256Hex {
     catch { return $null }
 }
 
-function Get-RegValue {
-    param([string]$Path, [string]$Name)
-    try {
-        $v = Get-ItemProperty -Path $Path -Name $Name -ErrorAction Stop
-        return $v.$Name
-    } catch { return $null }
-}
+# Get-RegValue, Get-SystemStateSnapshot, ConvertTo-FlatDict, and Get-StateDelta
+# now live in ImageHardeningLib.ps1 (dot-sourced above) so the pipeline-level
+# snapshot and each child stage's snapshot are produced by identical code.
 
 function Get-HostSnapshot {
     $cv = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
@@ -143,92 +149,6 @@ function Get-HostSnapshot {
     }
 }
 
-function Get-SystemStateSnapshot {
-    # Best-effort state readback. Each section is independent and swallows
-    # its own errors - a missing cmdlet on an old image must not block the
-    # artifact. Called twice by the orchestrator: once before the pipeline
-    # (PreRunState) and once after (PostRunState).
-    $snapshot = [ordered]@{}
-
-    # Firewall
-    $fw = @{}
-    try {
-        foreach ($p in Get-NetFirewallProfile -ErrorAction Stop) {
-            $fw[$p.Name] = [ordered]@{
-                Enabled              = [bool]$p.Enabled
-                DefaultInboundAction  = [string]$p.DefaultInboundAction
-                DefaultOutboundAction = [string]$p.DefaultOutboundAction
-            }
-        }
-    } catch { $fw['_error'] = $_.Exception.Message }
-    $snapshot['Firewall'] = $fw
-
-    # BitLocker (recovery key hash, not the plaintext password)
-    $bl = @()
-    try {
-        foreach ($v in Get-BitLockerVolume -ErrorAction Stop) {
-            $protectors = @($v.KeyProtector | ForEach-Object { [string]$_.KeyProtectorType } | Sort-Object -Unique)
-            $bl += [ordered]@{
-                MountPoint          = $v.MountPoint
-                VolumeType          = [string]$v.VolumeType
-                ProtectionStatus    = [string]$v.ProtectionStatus
-                EncryptionMethod    = [string]$v.EncryptionMethod
-                VolumeStatus        = [string]$v.VolumeStatus
-                EncryptionPercentage = [int]$v.EncryptionPercentage
-                KeyProtectorTypes   = $protectors
-            }
-        }
-    } catch { $bl = @([ordered]@{ _error = $_.Exception.Message }) }
-    $snapshot['BitLocker'] = $bl
-
-    # Defender
-    $def = [ordered]@{}
-    try {
-        $m = Get-MpComputerStatus -ErrorAction Stop
-        $def.RealTimeProtectionEnabled = [bool]$m.RealTimeProtectionEnabled
-        $def.TamperProtected           = [bool]$m.IsTamperProtected
-        $def.AMServiceEnabled          = [bool]$m.AMServiceEnabled
-        $def.AntispywareEnabled        = [bool]$m.AntispywareEnabled
-        $def.AntivirusEnabled          = [bool]$m.AntivirusEnabled
-    } catch { $def['_error'] = $_.Exception.Message }
-    $snapshot['Defender'] = $def
-
-    # SMB signing
-    $smb = [ordered]@{
-        ClientRequireSecuritySignature = (Get-RegValue 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters' 'RequireSecuritySignature')
-        ServerRequireSecuritySignature = (Get-RegValue 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters'       'RequireSecuritySignature')
-    }
-    $snapshot['SMB'] = $smb
-
-    # SCHANNEL protocols
-    $schBase = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols'
-    $sch = [ordered]@{}
-    foreach ($p in @('TLS 1.0','TLS 1.1','TLS 1.2','TLS 1.3','SSL 3.0')) {
-        $sch[$p] = [ordered]@{
-            ClientEnabled = (Get-RegValue "$schBase\$p\Client" 'Enabled')
-            ServerEnabled = (Get-RegValue "$schBase\$p\Server" 'Enabled')
-        }
-    }
-    $snapshot['Schannel'] = $sch
-
-    # UAC
-    $polSys = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
-    $snapshot['UAC'] = [ordered]@{
-        EnableLUA                 = (Get-RegValue $polSys 'EnableLUA')
-        ConsentPromptBehaviorAdmin = (Get-RegValue $polSys 'ConsentPromptBehaviorAdmin')
-        FilterAdministratorToken  = (Get-RegValue $polSys 'FilterAdministratorToken')
-    }
-
-    # RDP
-    $ts = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
-    $snapshot['RDP'] = [ordered]@{
-        UserAuthentication = (Get-RegValue $ts 'UserAuthentication')
-        MinEncryptionLevel = (Get-RegValue $ts 'MinEncryptionLevel')
-    }
-
-    return $snapshot
-}
-
 function Get-ScriptSummary {
     # Locate and parse the .summary.json sidecar that Write-LogSummary
     # emits next to the child's CMTrace log.
@@ -259,71 +179,10 @@ function Get-ChangeLedger {
     return ,$events.ToArray()
 }
 
-function ConvertTo-FlatDict {
-    # Flattens an arbitrarily nested hashtable/ordered/array/scalar graph
-    # into a plain hashtable of dotted-path -> scalar value, suitable for
-    # leaf-by-leaf diffing. Array elements are suffixed with [i].
-    param($Obj, [string]$Prefix = '')
-    $out = @{}
-    if ($null -eq $Obj) { $out[$Prefix] = $null; return $out }
-    if ($Obj -is [System.Collections.IDictionary]) {
-        foreach ($k in $Obj.Keys) {
-            $p = if ($Prefix) { "$Prefix.$k" } else { [string]$k }
-            $child = ConvertTo-FlatDict -Obj $Obj[$k] -Prefix $p
-            foreach ($ck in $child.Keys) { $out[$ck] = $child[$ck] }
-        }
-        return $out
-    }
-    if ($Obj -is [System.Collections.IEnumerable] -and $Obj -isnot [string]) {
-        $i = 0
-        foreach ($el in $Obj) {
-            $p = if ($Prefix) { "$Prefix[$i]" } else { "[$i]" }
-            $child = ConvertTo-FlatDict -Obj $el -Prefix $p
-            foreach ($ck in $child.Keys) { $out[$ck] = $child[$ck] }
-            $i++
-        }
-        return $out
-    }
-    $out[$Prefix] = $Obj
-    return $out
-}
-
-function Get-StateDelta {
-    # Produce a list of leaves whose value changed between Before and
-    # After. Comparison is done on compact-JSON serialisation so nulls,
-    # bools, and numbers compare correctly across the OrderedDict round
-    # trip. Entries missing from one side surface as OldValue=$null or
-    # NewValue=$null.
-    param($Before, $After)
-    $b = ConvertTo-FlatDict -Obj $Before
-    $a = ConvertTo-FlatDict -Obj $After
-    $keys = @($b.Keys) + @($a.Keys) | Sort-Object -Unique
-    $deltas = New-Object System.Collections.Generic.List[object]
-    foreach ($k in $keys) {
-        $bv = if ($b.ContainsKey($k)) { $b[$k] } else { $null }
-        $av = if ($a.ContainsKey($k)) { $a[$k] } else { $null }
-        # Use -InputObject to prevent PS 5.1 from unrolling arrays through the
-        # pipeline. '$arr | ConvertTo-Json' returns N strings; '-InputObject $arr'
-        # returns one JSON array string. -ne on a string[] vs string throws
-        # System.ArgumentException under Set-StrictMode -Version Latest.
-        $bj = if ($null -eq $bv) { 'null' } else { ConvertTo-Json -InputObject $bv -Compress -Depth 3 }
-        $aj = if ($null -eq $av) { 'null' } else { ConvertTo-Json -InputObject $av -Compress -Depth 3 }
-        if ($bj -ne $aj) {
-            $deltas.Add([pscustomobject]@{
-                Path     = $k
-                OldValue = $bv
-                NewValue = $av
-            })
-        }
-    }
-    return ,$deltas.ToArray()
-}
-
-# ---------- Hardening Pipeline (stages 1-5) --------------------------------
+# ---------- Hardening Pipeline (stages 1-4) --------------------------------
 
 $pipeline = @(
-    @{ Name = 'Invoke-Win11Debloat.ps1';      Args = @{} }
-    @{ Name = 'Set-CISL1Hardening.ps1';       Args = @{} }
+    @{ Name = 'Invoke-Win11Debloat.ps1';       Args = @{} }
     @{ Name = 'Set-CompanyCustomizations.ps1'; Args = @{} }
     @{ Name = 'Set-CipherSuiteHardening.ps1'; Args = @{} }
     @{ Name = 'Set-BitLockerConfig.ps1';       Args = @{} }
@@ -421,7 +280,7 @@ $stateDelta = Get-StateDelta -Before $preState -After $postState
 # assignment its own traceable line number.
 $artifact = [ordered]@{}
 $artifact['GeneratedUtc']        = $runEnd.ToString('o')
-$artifact['OrchestratorVersion'] = '2.1.0'
+$artifact['OrchestratorVersion'] = '2.2.0'
 $artifact['Baseline']            = 'CIS Microsoft Windows 11 Enterprise Benchmark v5.0.0 L1'
 $artifact['HitrustCsfRefs']      = @('01.x Access Control','09.x Communications and Operations Management','10.x Information Systems Acquisition, Development, and Maintenance')
 $artifact['RunStartUtc']         = $runStart.ToString('o')

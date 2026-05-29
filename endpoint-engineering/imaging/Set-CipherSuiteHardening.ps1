@@ -65,6 +65,10 @@ $manifest = Read-HardeningManifest -Path $ManifestPath `
 Write-Log "Manifest: $ManifestPath (v$($manifest.version))"
 Write-Log "OS Build: $((Get-CimInstance Win32_OperatingSystem).BuildNumber)"
 
+# Reference state snapshot BEFORE any changes (paired with the Post snapshot
+# at script end; the Post call also writes a delta of what this script changed).
+Save-HardeningSnapshot -Phase Pre | Out-Null
+
 $SchannelBase = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL'
 
 # SCHANNEL Ciphers/Hashes 'Enabled' DWORD = 0xFFFFFFFF for enabled, 0 for
@@ -149,6 +153,9 @@ foreach ($h in $manifest.hashes) {
     Set-HardenedRegistry -Path "$SchannelBase\Hashes\$($h.name)" -Name 'Enabled' `
         -Value $val -Description "Hash $($h.name): $($h.state)"
 }
+
+# Reference state snapshot AFTER all changes; emits delta.json vs the Pre snapshot.
+Save-HardeningSnapshot -Phase Post | Out-Null
 
 Write-LogSummary -ScriptName 'Set-CipherSuiteHardening'
 Write-Host '  Reboot required for SCHANNEL changes to take effect.' -ForegroundColor Yellow

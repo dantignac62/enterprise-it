@@ -20,12 +20,17 @@
 # LOGGING
 # ===============================================================================
 
-$script:LogFile      = $null
-$script:ChangesFile  = $null
-$script:Component    = 'ImageHardening'
-$script:QuietMode    = $false
-$script:DebugEnabled = $false
-$script:Counters     = @{ Applied = 0; Skipped = 0; SkippedByManifest = 0; Warned = 0; Errors = 0 }
+$script:LogFile         = $null
+$script:ChangesFile     = $null
+$script:Component       = 'ImageHardening'
+$script:QuietMode       = $false
+$script:DebugEnabled    = $false
+$script:Counters        = @{ Applied = 0; Skipped = 0; SkippedByManifest = 0; Warned = 0; Errors = 0 }
+# Snapshot state (see SYSTEM STATE SNAPSHOT section). SnapshotStamp is set
+# once per run so the Pre and Post snapshots land in the same folder;
+# PreSnapshotState caches the pre-run readback so Post can emit a delta.
+$script:SnapshotStamp    = $null
+$script:PreSnapshotState = $null
 
 function Write-ChangeEvent {
     <#
@@ -103,7 +108,11 @@ function Initialize-HardeningLog {
 
     $script:Component = $Component
     $script:QuietMode = [bool]$Quiet
-    $script:Counters  = @{ Applied = 0; Skipped = 0; SkippedByManifest = 0; Warned = 0; Errors = 0 } 
+    $script:Counters  = @{ Applied = 0; Skipped = 0; SkippedByManifest = 0; Warned = 0; Errors = 0 }
+    # Fresh snapshot stamp/cache per run so Save-HardeningSnapshot pairs
+    # this run's Pre and Post under one timestamped folder.
+    $script:SnapshotStamp    = $null
+    $script:PreSnapshotState = $null
 
     # Resolve relative paths against current working directory
     if (-not [System.IO.Path]::IsPathRooted($LogPath)) {
@@ -556,4 +565,298 @@ function Set-HardenedRegistryNet {
     finally {
         if ($null -ne $key) { $key.Close() }
     }
+}
+# ===============================================================================
+# SYSTEM STATE SNAPSHOT
+# ===============================================================================
+# Single source of truth for the pre/post system-state readback. Used both by
+# the per-script Save-HardeningSnapshot wrapper below AND by
+# Invoke-HardeningOrchestrator.ps1 (which dot-sources this library) so that the
+# pipeline-level snapshot and each stage's snapshot share an identical shape and
+# can be diffed against one another. All readers are best-effort and swallow
+# their own errors so a missing cmdlet on an older image never blocks a run.
+
+function Get-RegValue {
+    <#
+    .SYNOPSIS
+        Reads a single registry value, returning $null if the key/value or
+        the whole path is absent. Never throws.
+    #>
+    param([string]$Path, [string]$Name)
+    try {
+        $v = Get-ItemProperty -Path $Path -Name $Name -ErrorAction Stop
+        return $v.$Name
+    } catch { return $null }
+}
+
+function Get-SystemStateSnapshot {
+    <#
+    .SYNOPSIS
+        Best-effort readback of the security-relevant system state the
+        hardening pipeline touches: firewall profiles, BitLocker volume
+        protection/method, Defender real-time + tamper protection, SMB
+        signing, SCHANNEL TLS protocol enablement, UAC, and RDP NLA +
+        encryption level. Returns an [ordered] hashtable. Each section is
+        independent and records its own error rather than throwing.
+    #>
+    $snapshot = [ordered]@{}
+
+    # Firewall
+    $fw = @{}
+    try {
+        foreach ($p in Get-NetFirewallProfile -ErrorAction Stop) {
+            $fw[$p.Name] = [ordered]@{
+                Enabled               = [bool]$p.Enabled
+                DefaultInboundAction  = [string]$p.DefaultInboundAction
+                DefaultOutboundAction = [string]$p.DefaultOutboundAction
+            }
+        }
+    } catch { $fw['_error'] = $_.Exception.Message }
+    $snapshot['Firewall'] = $fw
+
+    # BitLocker (key-protector types only, never plaintext recovery material)
+    $bl = @()
+    try {
+        foreach ($v in Get-BitLockerVolume -ErrorAction Stop) {
+            $protectors = @($v.KeyProtector | ForEach-Object { [string]$_.KeyProtectorType } | Sort-Object -Unique)
+            $bl += [ordered]@{
+                MountPoint           = $v.MountPoint
+                VolumeType           = [string]$v.VolumeType
+                ProtectionStatus     = [string]$v.ProtectionStatus
+                EncryptionMethod     = [string]$v.EncryptionMethod
+                VolumeStatus         = [string]$v.VolumeStatus
+                EncryptionPercentage = [int]$v.EncryptionPercentage
+                KeyProtectorTypes    = $protectors
+            }
+        }
+    } catch { $bl = @([ordered]@{ _error = $_.Exception.Message }) }
+    $snapshot['BitLocker'] = $bl
+
+    # Defender
+    $def = [ordered]@{}
+    try {
+        $m = Get-MpComputerStatus -ErrorAction Stop
+        $def.RealTimeProtectionEnabled = [bool]$m.RealTimeProtectionEnabled
+        $def.TamperProtected           = [bool]$m.IsTamperProtected
+        $def.AMServiceEnabled          = [bool]$m.AMServiceEnabled
+        $def.AntispywareEnabled        = [bool]$m.AntispywareEnabled
+        $def.AntivirusEnabled          = [bool]$m.AntivirusEnabled
+    } catch { $def['_error'] = $_.Exception.Message }
+    $snapshot['Defender'] = $def
+
+    # SMB signing
+    $smb = [ordered]@{
+        ClientRequireSecuritySignature = (Get-RegValue 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters' 'RequireSecuritySignature')
+        ServerRequireSecuritySignature = (Get-RegValue 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters'       'RequireSecuritySignature')
+    }
+    $snapshot['SMB'] = $smb
+
+    # SCHANNEL protocols
+    $schBase = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols'
+    $sch = [ordered]@{}
+    foreach ($p in @('TLS 1.0','TLS 1.1','TLS 1.2','TLS 1.3','SSL 3.0')) {
+        $sch[$p] = [ordered]@{
+            ClientEnabled = (Get-RegValue "$schBase\$p\Client" 'Enabled')
+            ServerEnabled = (Get-RegValue "$schBase\$p\Server" 'Enabled')
+        }
+    }
+    $snapshot['Schannel'] = $sch
+
+    # UAC
+    $polSys = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+    $snapshot['UAC'] = [ordered]@{
+        EnableLUA                  = (Get-RegValue $polSys 'EnableLUA')
+        ConsentPromptBehaviorAdmin = (Get-RegValue $polSys 'ConsentPromptBehaviorAdmin')
+        FilterAdministratorToken   = (Get-RegValue $polSys 'FilterAdministratorToken')
+    }
+
+    # RDP
+    $ts = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
+    $snapshot['RDP'] = [ordered]@{
+        UserAuthentication = (Get-RegValue $ts 'UserAuthentication')
+        MinEncryptionLevel = (Get-RegValue $ts 'MinEncryptionLevel')
+    }
+
+    return $snapshot
+}
+
+function ConvertTo-FlatDict {
+    <#
+    .SYNOPSIS
+        Flattens an arbitrarily nested hashtable/ordered/array/scalar graph
+        into a plain hashtable of dotted-path -> scalar value, suitable for
+        leaf-by-leaf diffing. Array elements are suffixed with [i].
+    #>
+    param($Obj, [string]$Prefix = '')
+    $out = @{}
+    if ($null -eq $Obj) { $out[$Prefix] = $null; return $out }
+    if ($Obj -is [System.Collections.IDictionary]) {
+        foreach ($k in $Obj.Keys) {
+            $p = if ($Prefix) { "$Prefix.$k" } else { [string]$k }
+            $child = ConvertTo-FlatDict -Obj $Obj[$k] -Prefix $p
+            foreach ($ck in $child.Keys) { $out[$ck] = $child[$ck] }
+        }
+        return $out
+    }
+    if ($Obj -is [System.Collections.IEnumerable] -and $Obj -isnot [string]) {
+        $i = 0
+        foreach ($el in $Obj) {
+            $p = if ($Prefix) { "$Prefix[$i]" } else { "[$i]" }
+            $child = ConvertTo-FlatDict -Obj $el -Prefix $p
+            foreach ($ck in $child.Keys) { $out[$ck] = $child[$ck] }
+            $i++
+        }
+        return $out
+    }
+    $out[$Prefix] = $Obj
+    return $out
+}
+
+function Get-StateDelta {
+    <#
+    .SYNOPSIS
+        Produce a list of leaves whose value changed between Before and
+        After. Comparison is done on compact-JSON serialisation so nulls,
+        bools, and numbers compare correctly across the OrderedDict round
+        trip. Entries missing from one side surface as OldValue=$null or
+        NewValue=$null.
+    #>
+    param($Before, $After)
+    $b = ConvertTo-FlatDict -Obj $Before
+    $a = ConvertTo-FlatDict -Obj $After
+    $keys = @($b.Keys) + @($a.Keys) | Sort-Object -Unique
+    $deltas = New-Object System.Collections.Generic.List[object]
+    foreach ($k in $keys) {
+        $bv = if ($b.ContainsKey($k)) { $b[$k] } else { $null }
+        $av = if ($a.ContainsKey($k)) { $a[$k] } else { $null }
+        # -InputObject prevents PS 5.1 from unrolling arrays through the
+        # pipeline (which would yield N strings instead of one JSON array
+        # and throw on -ne under Set-StrictMode -Version Latest).
+        $bj = if ($null -eq $bv) { 'null' } else { ConvertTo-Json -InputObject $bv -Compress -Depth 3 }
+        $aj = if ($null -eq $av) { 'null' } else { ConvertTo-Json -InputObject $av -Compress -Depth 3 }
+        if ($bj -ne $aj) {
+            $deltas.Add([pscustomobject]@{
+                Path     = $k
+                OldValue = $bv
+                NewValue = $av
+            })
+        }
+    }
+    return ,$deltas.ToArray()
+}
+
+function Save-HardeningSnapshot {
+    <#
+    .SYNOPSIS
+        Captures a Get-SystemStateSnapshot readback and writes it to disk as
+        JSON. Call once with -Phase Pre before applying any changes and once
+        with -Phase Post after. The Post call also writes delta.json listing
+        every leaf value that changed between Pre and Post.
+
+    .DESCRIPTION
+        Output layout (one folder per run, shared by Pre and Post):
+            <SnapshotRoot>\<Component>\<yyyyMMdd_HHmmss>\pre.snapshot.json
+            <SnapshotRoot>\<Component>\<yyyyMMdd_HHmmss>\post.snapshot.json
+            <SnapshotRoot>\<Component>\<yyyyMMdd_HHmmss>\delta.json   (Post only)
+
+        SnapshotRoot defaults to a 'Snapshots' folder that is a sibling of the
+        log directory (i.e. for a default LogPath of .\Logs\<Component>.log the
+        snapshots land in .\Snapshots). If no log file is configured it falls
+        back to .\Snapshots under the current directory. Override with
+        -SnapshotRoot. The per-run timestamp is fixed by Initialize-HardeningLog
+        (or generated on the first call when running without it) so Pre and Post
+        always pair under the same folder.
+
+        Best-effort: a failure to create the directory or write a file is logged
+        as a WARN and returns $null rather than aborting the calling script.
+
+    .PARAMETER Phase
+        'Pre' (before changes) or 'Post' (after changes).
+
+    .PARAMETER Component
+        Folder/label for this snapshot set. Defaults to the component passed to
+        Initialize-HardeningLog.
+
+    .PARAMETER SnapshotRoot
+        Override for the snapshot root directory.
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)][ValidateSet('Pre','Post')][string]$Phase,
+        [string]$Component,
+        [string]$SnapshotRoot
+    )
+
+    if (-not $Component) { $Component = $script:Component }
+
+    # Resolve the snapshot root: sibling 'Snapshots' of the Logs dir when a log
+    # file is configured, else .\Snapshots under the current directory.
+    if (-not $SnapshotRoot) {
+        if ($script:LogFile) {
+            $logDir = Split-Path -Path $script:LogFile -Parent
+            $base   = if ($logDir) { Split-Path -Path $logDir -Parent } else { $null }
+            if (-not $base) { $base = (Get-Location).Path }
+            $SnapshotRoot = Join-Path $base 'Snapshots'
+        } else {
+            $SnapshotRoot = Join-Path (Get-Location).Path 'Snapshots'
+        }
+    }
+
+    # One timestamp per run so Pre and Post share a folder.
+    if (-not $script:SnapshotStamp) {
+        $script:SnapshotStamp = Get-Date -Format 'yyyyMMdd_HHmmss'
+    }
+
+    $dir = Join-Path (Join-Path $SnapshotRoot $Component) $script:SnapshotStamp
+    if (-not (Test-Path -LiteralPath $dir)) {
+        try { New-Item -ItemType Directory -Path $dir -Force -ErrorAction Stop | Out-Null }
+        catch {
+            Write-Log "Snapshot directory create failed: $dir - $($_.Exception.Message)" -Level WARN
+            return $null
+        }
+    }
+
+    $state = Get-SystemStateSnapshot
+    $payload = [ordered]@{
+        Component   = $Component
+        Phase       = $Phase
+        CapturedUtc = (Get-Date).ToUniversalTime().ToString('o')
+        Host        = $env:COMPUTERNAME
+        State       = $state
+    }
+
+    $file = Join-Path $dir ('{0}.snapshot.json' -f $Phase.ToLowerInvariant())
+    try {
+        ConvertTo-Json -InputObject $payload -Depth 12 | Set-Content -LiteralPath $file -Encoding UTF8
+        Write-Log "$Phase-run state snapshot saved: $file"
+    } catch {
+        Write-Log "Snapshot write failed: $file - $($_.Exception.Message)" -Level WARN
+        return $null
+    }
+
+    if ($Phase -eq 'Pre') {
+        # Cache in memory so the Post call can diff without re-reading the file.
+        $script:PreSnapshotState = $state
+    } elseif ($Phase -eq 'Post') {
+        if ($script:PreSnapshotState) {
+            $delta = Get-StateDelta -Before $script:PreSnapshotState -After $state
+            $deltaPayload = [ordered]@{
+                Component        = $Component
+                GeneratedUtc     = (Get-Date).ToUniversalTime().ToString('o')
+                ChangedLeafCount = @($delta).Count
+                Changes          = $delta
+            }
+            $deltaFile = Join-Path $dir 'delta.json'
+            try {
+                ConvertTo-Json -InputObject $deltaPayload -Depth 12 | Set-Content -LiteralPath $deltaFile -Encoding UTF8
+                Write-Log "State delta saved: $deltaFile ($(@($delta).Count) leaf change(s))"
+            } catch {
+                Write-Log "Delta write failed: $deltaFile - $($_.Exception.Message)" -Level WARN
+            }
+        } else {
+            Write-Log 'Post snapshot saved without a matching Pre snapshot; no delta computed.' -Level WARN
+        }
+    }
+
+    return $file
 }

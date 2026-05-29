@@ -26,7 +26,7 @@
                                         %SystemRoot%\\System32\\OneDriveSetup.exe
                                         /uninstall.
 
-    Intended to run after Set-CISL1Hardening and before
+    Intended to run after Invoke-Win11Debloat and before
     Set-CipherSuiteHardening.
 
     Requires ImageHardeningLib.ps1 in the same directory.
@@ -72,6 +72,10 @@ $manifest = Read-HardeningManifest -Path $ManifestPath `
 
 Write-Log "Manifest: $ManifestPath (v$($manifest.version))"
 Write-Log "OS Build: $((Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue).BuildNumber)"
+
+# Reference state snapshot BEFORE any changes (paired with the Post snapshot
+# at script end; the Post call also writes a delta of what this script changed).
+Save-HardeningSnapshot -Phase Pre | Out-Null
 
 # ===========================================================================
 # Phase 1: Registry settings (HKLM + HKCU)
@@ -309,5 +313,8 @@ if (-not $manifest.oneDriveWin32Uninstall.enabled) {
         }
     }
 }
+
+# Reference state snapshot AFTER all changes; emits delta.json vs the Pre snapshot.
+Save-HardeningSnapshot -Phase Post | Out-Null
 
 Write-LogSummary -ScriptName 'Set-CompanyCustomizations'

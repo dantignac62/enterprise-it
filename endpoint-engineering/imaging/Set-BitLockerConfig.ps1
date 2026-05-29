@@ -61,6 +61,10 @@ $manifest = Read-HardeningManifest -Path $ManifestPath `
 Write-Log "Manifest: $ManifestPath (v$($manifest.version))"
 Write-Log "OS Build: $((Get-CimInstance Win32_OperatingSystem).BuildNumber)"
 
+# Reference state snapshot BEFORE any changes (paired with the Post snapshot
+# at script end; the Post call also writes a delta of what this script changed).
+Save-HardeningSnapshot -Phase Pre | Out-Null
+
 # TPM pre-flight (informational; policy is set regardless)
 try {
     $tpm = Get-Tpm -ErrorAction Stop
@@ -98,6 +102,9 @@ foreach ($r in $manifest.registrySettings) {
     Set-HardenedRegistry -Path $r.path -Name $r.name -Value $r.value `
         -Type $r.type -Description $r.description
 }
+
+# Reference state snapshot AFTER all changes; emits delta.json vs the Pre snapshot.
+Save-HardeningSnapshot -Phase Post | Out-Null
 
 Write-LogSummary -ScriptName 'Set-BitLockerConfig'
 Write-Host '  BitLocker policy set. Encryption will be enabled by deployment platform.' -ForegroundColor Cyan
