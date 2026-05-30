@@ -192,7 +192,6 @@ $common = @{ Quiet = $Quiet }
 if ($WhatIfPreference) { $common['WhatIf'] = $true }
 
 $results         = New-Object System.Collections.Generic.List[object]
-$skippedStages   = New-Object System.Collections.Generic.List[string]
 $preHost    = Get-HostSnapshot
 Write-Host '  Capturing pre-run state snapshot...' -ForegroundColor Cyan
 $preState   = Get-SystemStateSnapshot
