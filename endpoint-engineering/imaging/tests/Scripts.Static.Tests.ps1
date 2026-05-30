@@ -10,6 +10,10 @@
 
     (1) and (4) directly guard the failure class the last commit fixed
     ("Fix unrunnable Edge scripts and purge em-dashes from imaging/").
+
+    This file is deliberately pure ASCII: the forbidden-glyph set in the
+    hygiene test is built from numeric code points (not literal characters)
+    so the file parses identically regardless of encoding or shell.
 #>
 
 BeforeDiscovery {
@@ -23,6 +27,12 @@ BeforeAll {
     $script:HasAnalyzer = [bool](Get-Module -ListAvailable PSScriptAnalyzer)
     if ($script:HasAnalyzer) { Import-Module PSScriptAnalyzer }
     $script:AnalyzerSettings = Join-Path $PSScriptRoot 'PSScriptAnalyzerSettings.psd1'
+
+    # Smart-punctuation we forbid in imaging scripts, built from code points so
+    # this source stays ASCII: en-dash, em-dash, left/right single quotes,
+    # left/right double quotes, horizontal ellipsis.
+    $script:ForbiddenChars = [char[]](0x2013,0x2014,0x2018,0x2019,0x201C,0x201D,0x2026)
+    $script:ForbiddenRegex = '[' + ([string]::Join('', $script:ForbiddenChars)) + ']'
 }
 
 Describe 'Static analysis: <Name>' -ForEach $script:AllScripts {
@@ -50,9 +60,9 @@ Describe 'Imaging hygiene: <Name>' -ForEach $script:ImagingScripts {
 
     It 'contains no em-dash, en-dash, smart quotes, or ellipsis (ASCII punctuation only)' {
         $text = Get-Content -LiteralPath $Path -Raw
-        $matches = [regex]::Matches($text, "[–—‘’“”…]")
-        $detail = ($matches | ForEach-Object { "U+{0:X4}" -f [int][char]$_.Value } | Select-Object -Unique) -join ', '
-        @($matches).Count | Should -Be 0 -Because "found: $detail"
+        $hits = [regex]::Matches($text, $script:ForbiddenRegex)
+        $detail = ($hits | ForEach-Object { 'U+{0:X4}' -f [int][char]$_.Value } | Select-Object -Unique) -join ', '
+        @($hits).Count | Should -Be 0 -Because "found: $detail"
     }
 
     It 'resolves its dot-sourced ImageHardeningLib.ps1 path when it uses one' {

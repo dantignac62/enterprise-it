@@ -36,6 +36,30 @@ param(
     [switch]$CI
 )
 
+# This suite requires PowerShell 7+ (the manifest tests use Test-Json -Schema,
+# which does not exist in Windows PowerShell 5.1). If launched under 5.1,
+# transparently re-invoke under pwsh so `.\Invoke-Tests.ps1` works from any
+# shell. Fail with a clear message only if pwsh is genuinely absent.
+if ($PSVersionTable.PSVersion.Major -lt 6) {
+    $pwshExe = Get-Command pwsh -ErrorAction SilentlyContinue
+    if (-not $pwshExe) {
+        Write-Host 'This suite requires PowerShell 7+ (pwsh). Windows PowerShell 5.1 lacks Test-Json -Schema.' -ForegroundColor Red
+        Write-Host 'Install PowerShell 7: https://aka.ms/install-powershell' -ForegroundColor Yellow
+        exit 2
+    }
+    Write-Host 'Relaunching under PowerShell 7 (pwsh)...' -ForegroundColor Yellow
+    $argList = @('-NoProfile', '-File', $PSCommandPath)
+    foreach ($kv in $PSBoundParameters.GetEnumerator()) {
+        if ($kv.Value -is [switch]) {
+            if ($kv.Value) { $argList += "-$($kv.Key)" }
+        } else {
+            $argList += "-$($kv.Key)"; $argList += [string]$kv.Value
+        }
+    }
+    & $pwshExe.Source @argList
+    exit $LASTEXITCODE
+}
+
 $pester = Get-Module -ListAvailable Pester |
     Where-Object { $_.Version.Major -ge 5 } |
     Sort-Object Version -Descending | Select-Object -First 1
