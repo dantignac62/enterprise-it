@@ -6,7 +6,8 @@ Scripts and supporting artifacts for building and hardening the Windows gold ima
 
 - `*.ps1` — hardening scripts and the orchestrator. Each manifest-driven script has a sibling JSON manifest in `manifests/`.
 - `ImageHardeningLib.ps1` — shared library: CMTrace logging, change ledger, idempotent registry write helper, manifest loader, manifest-skip helper.
-- `Invoke-HardeningOrchestrator.ps1` — top-level runner. Executes the hardening stages in order, captures pre/post state snapshots, and emits the HITRUST evidence artifact (`Evidence/<timestamp>/report.{json,md}`).
+- `Invoke-HardeningOrchestrator.ps1` — top-level runner. Executes the hardening stages in order, captures pre/post state snapshots, and emits the HITRUST evidence artifact (`Evidence/<timestamp>/report.{json,md}`). Pass `-Revert` to run `Remove-CISL1Hardening.ps1` instead of the hardening stages; add `-WhatIf` to preview either mode.
+- `Remove-CISL1Hardening.ps1` — reverts the CIS L1 controls currently opted out (`enabled:false`) in `Set-CISL1Hardening.manifest.json` on machines a prior run hardened: removes the policy values and restores default service start types. Credential Guard is checked post-revert and the manual UEFI-lock removal steps are logged if it is still running. Run standalone, or via the orchestrator's `-Revert` mode.
 - `manifests/` — JSON manifests and JSON Schemas for the manifest-driven hardening scripts.
 
 ## Conventions

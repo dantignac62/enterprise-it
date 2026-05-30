@@ -53,10 +53,21 @@
 .PARAMETER EvidencePath
     Override for the evidence root. Default: .\Evidence
 
+.PARAMETER Revert
+    Run the revert pipeline instead of the hardening pipeline. Executes
+    Remove-CISL1Hardening.ps1, which walks back the CIS L1 controls currently
+    opted out (enabled:false) in Set-CISL1Hardening.manifest.json. Produces the
+    same evidence artifact (pre/post snapshots, delta, change ledger), tagged
+    Mode=Revert. Combine with -WhatIf to preview without changing anything.
+
 .NOTES
-    Version : 2.2.0 | Date: 2026-04-26
+    Version : 2.3.0 | Date: 2026-05-30
     Target  : Windows 11 Enterprise 25H2 (Build 26200.x+)
     Changes :
+      2.3.0 - Added -Revert mode. Runs Remove-CISL1Hardening.ps1 to walk back
+              the CIS L1 controls opted out in the manifest, emitting the same
+              evidence artifact (tagged Mode=Revert). Default behavior (the
+              hardening pipeline) is unchanged.
       2.2.0 - Removed the Set-CISL1Hardening.ps1 stage from the pipeline.
               The CIS L1 stage no longer runs. Snapshot/delta/state-readback
               helpers (Get-SystemStateSnapshot, Get-RegValue, ConvertTo-FlatDict,
@@ -83,7 +94,8 @@
 [CmdletBinding(SupportsShouldProcess)]
 param(
     [switch]$Quiet,
-    [string]$EvidencePath
+    [string]$EvidencePath,
+    [switch]$Revert
 )
 
 Set-StrictMode -Version Latest
@@ -179,14 +191,27 @@ function Get-ChangeLedger {
     return ,$events.ToArray()
 }
 
-# ---------- Hardening Pipeline (stages 1-4) --------------------------------
+# ---------- Pipeline selection ---------------------------------------------
+# Default: the hardening pipeline (stages 1-4). With -Revert: a single-stage
+# revert pipeline that walks back the controls opted out in the CIS L1 manifest.
 
-$pipeline = @(
-    @{ Name = 'Invoke-Win11Debloat.ps1';       Args = @{} }
-    @{ Name = 'Set-CompanyCustomizations.ps1'; Args = @{} }
-    @{ Name = 'Set-CipherSuiteHardening.ps1'; Args = @{} }
-    @{ Name = 'Set-BitLockerConfig.ps1';       Args = @{} }
-)
+if ($Revert) {
+    $mode     = 'Revert'
+    $pipeline = @(
+        @{ Name = 'Remove-CISL1Hardening.ps1'; Args = @{} }
+    )
+} else {
+    $mode     = 'Harden'
+    $pipeline = @(
+        @{ Name = 'Invoke-Win11Debloat.ps1';       Args = @{} }
+        @{ Name = 'Set-CompanyCustomizations.ps1'; Args = @{} }
+        @{ Name = 'Set-CipherSuiteHardening.ps1'; Args = @{} }
+        @{ Name = 'Set-BitLockerConfig.ps1';       Args = @{} }
+    )
+}
+
+Write-Host ''
+Write-Host "  Orchestrator mode: $mode" -ForegroundColor $(if ($Revert) { 'Yellow' } else { 'Cyan' })
 
 $common = @{ Quiet = $Quiet }
 if ($WhatIfPreference) { $common['WhatIf'] = $true }
@@ -279,7 +304,8 @@ $stateDelta = Get-StateDelta -Before $preState -After $postState
 # assignment its own traceable line number.
 $artifact = [ordered]@{}
 $artifact['GeneratedUtc']        = $runEnd.ToString('o')
-$artifact['OrchestratorVersion'] = '2.2.0'
+$artifact['OrchestratorVersion'] = '2.3.0'
+$artifact['Mode']                = $mode
 $artifact['Baseline']            = 'CIS Microsoft Windows 11 Enterprise Benchmark v5.0.0 L1'
 $artifact['HitrustCsfRefs']      = @('01.x Access Control','09.x Communications and Operations Management','10.x Information Systems Acquisition, Development, and Maintenance')
 $artifact['RunStartUtc']         = $runStart.ToString('o')
@@ -301,11 +327,12 @@ ConvertTo-Json -InputObject $artifact -Depth 12 | Set-Content -LiteralPath $json
 
 # Markdown rendering -------------------------------------------------------
 $md = New-Object System.Collections.Generic.List[string]
-$md.Add('# Windows 11 Hardening - Evidence Artifact')
+$md.Add("# Windows 11 $mode - Evidence Artifact")
 $md.Add('')
 $md.Add('| Field | Value |')
 $md.Add('| --- | --- |')
 $md.Add("| Generated | $($artifact.GeneratedUtc) |")
+$md.Add("| Mode | $mode |")
 $md.Add("| Operator | $($preHost.Operator) |")
 $md.Add("| Machine | $($preHost.Machine) |")
 $md.Add("| OS | $($preHost.OsProductName) $($preHost.OsDisplayVersion) ($($preHost.OsEditionId)) |")
@@ -464,8 +491,16 @@ Write-Host "  Evidence: $mdPath"                   -ForegroundColor Cyan
 Write-Host ''
 
 $failed = @($results.ToArray() | Where-Object { $_.Status -ne 'OK' })
-if ($failed.Count -gt 0) {
-    Write-Host "  Investigate failures before sysprep /generalize /oobe /shutdown." -ForegroundColor Yellow
-    exit 1
+if ($Revert) {
+    if ($failed.Count -gt 0) {
+        Write-Host "  Investigate revert failures above. Reboot to finalize any changes that did apply." -ForegroundColor Yellow
+        exit 1
+    }
+    Write-Host "  Revert complete. Reboot to finalize service and VBS/Credential Guard changes." -ForegroundColor Yellow
+} else {
+    if ($failed.Count -gt 0) {
+        Write-Host "  Investigate failures before sysprep /generalize /oobe /shutdown." -ForegroundColor Yellow
+        exit 1
+    }
+    Write-Host "  Next: sysprep /generalize /oobe /shutdown, then capture the VHDX with DISM /Capture-Image." -ForegroundColor Yellow
 }
-Write-Host "  Next: sysprep /generalize /oobe /shutdown, then capture the VHDX with DISM /Capture-Image." -ForegroundColor Yellow
