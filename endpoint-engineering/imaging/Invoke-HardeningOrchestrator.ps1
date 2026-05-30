@@ -45,7 +45,7 @@
       - ChangeLedger: per-setting record of every Set-HardenedRegistry
         call, with Action (APPLIED = state transition, VERIFIED =
         already at target), path, name, old/new value, CIS ref,
-        description — read from each script's .changes.jsonl
+        description -- read from each script's .changes.jsonl
 
 .PARAMETER Quiet
     Suppress child-script console output. Log files still written.
@@ -329,7 +329,7 @@ foreach ($r in $results) {
     $a = if ($r.Counters) { $r.Counters.Applied } else { '-' }
     $s = if ($r.Counters) { $r.Counters.Skipped } else { '-' }
     # SkippedByManifest may be absent from a sidecar written by an older
-    # version of the lib — render '-' if so.
+    # version of the lib -- render '-' if so.
     $d = if ($r.Counters -and $r.Counters.PSObject.Properties.Name -contains 'SkippedByManifest') {
             $r.Counters.SkippedByManifest
          } else { '-' }

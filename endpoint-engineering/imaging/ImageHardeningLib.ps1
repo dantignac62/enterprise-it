@@ -216,7 +216,7 @@ function Write-Log {
         default { 1 }
     }
 
-    # Update counters (DEBUG is not counted — it's diagnostic noise, not
+    # Update counters (DEBUG is not counted -- it's diagnostic noise, not
     # an outcome)
     switch ($Level) {
         'APPLIED'       { $script:Counters.Applied++ }
@@ -436,7 +436,7 @@ function Set-HardenedRegistry {
     $label = if ($CISRef) { "[$CISRef] $Description" } else { $Description }
 
     # Key names containing '/' (SCHANNEL 'DES 56/56', 'AES 128/128', etc.) are
-    # not traversable via the PS registry provider — fall back to .NET API.
+    # not traversable via the PS registry provider -- fall back to .NET API.
     # Split-Path -Leaf can't detect this because it normalizes '/' as a
     # separator, so check the raw string. '/' never appears in valid path
     # prefixes (HKLM:\) or standard hive names.

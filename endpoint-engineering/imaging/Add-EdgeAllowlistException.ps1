@@ -1,13 +1,16 @@
 #Requires -RunAsAdministrator
-Set-StrictMode -Version Latest
-$ErrorActionPreference = 'Stop'
-
+[CmdletBinding(SupportsShouldProcess)]
 param(
     [Parameter(Mandatory)]
+    [ValidateNotNullOrEmpty()]
     [string]$Url,
 
+    [ValidateNotNullOrEmpty()]
     [string]$TargetUser = 'KioskUser'
 )
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
 
 # Resolve SID
 $userObj = Get-CimInstance Win32_UserAccount -Filter "LocalAccount=True AND Name='$TargetUser'"
@@ -16,7 +19,7 @@ if (-not $userObj) { throw "User '$TargetUser' not found" }
 $regPath = "Registry::HKEY_USERS\$($userObj.SID)\SOFTWARE\Policies\Microsoft\Edge\URLAllowlist"
 
 if (-not (Test-Path $regPath)) {
-    throw "URLAllowlist key does not exist — run the base policy script first."
+    throw "URLAllowlist key does not exist -- run the base policy script first."
 }
 
 # Find the next available index
@@ -36,5 +39,7 @@ if ($Url -in $currentUrls) {
     return
 }
 
-New-ItemProperty -Path $regPath -Name $nextIndex -Value $Url -PropertyType String -Force | Out-Null
-Write-Output "Added '$Url' as entry $nextIndex in URLAllowlist."
+if ($PSCmdlet.ShouldProcess("$regPath\$nextIndex", "Add URL '$Url'")) {
+    New-ItemProperty -Path $regPath -Name $nextIndex -Value $Url -PropertyType String -Force | Out-Null
+    Write-Output "Added '$Url' as entry $nextIndex in URLAllowlist."
+}
