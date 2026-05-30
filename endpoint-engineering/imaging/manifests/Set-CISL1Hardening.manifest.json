@@ -1,13 +1,13 @@
 {
   "$schema": "./Set-CISL1Hardening.manifest.schema.json",
   "name": "CISL1Hardening",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "baseline": "CIS Microsoft Windows 11 Enterprise Benchmark v5.0.0 L1",
-  "lastModifiedUtc": "2026-05-15T00:00:00Z",
+  "lastModifiedUtc": "2026-05-30T00:00:00Z",
   "description": "Switch-style manifest for CIS L1 controls. Set 'enabled' to false on any entry to skip the control while preserving its presence in the audit trail (recorded as SKIPPED_BY_MANIFEST). Registry-only controls live in 'registrySettings'; service disablements live in 'services'; reminders for items that must be applied via GPO / Intune live in 'notes'.",
 
   "registrySettings": [
-    { "section": "2.3.1 Accounts",            "cisRef": "2.3.1.1",   "description": "Block Microsoft accounts",                  "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "NoConnectedUser",            "type": "DWord", "value": 3,         "enabled": true },
+    { "section": "2.3.1 Accounts",            "cisRef": "2.3.1.1",   "description": "Block Microsoft accounts",                  "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "NoConnectedUser",            "type": "DWord", "value": 3,         "enabled": false },
     { "section": "2.3.2 Audit",               "cisRef": "2.3.2.1",   "description": "Force audit subcategory settings",          "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa",                                                          "name": "SCENoApplyLegacyAuditPolicy","type": "DWord", "value": 1,         "enabled": true },
 
     { "section": "2.3.7 Interactive logon",   "cisRef": "2.3.7.1",   "description": "Do not display last user",                  "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "DontDisplayLastUserName",    "type": "DWord", "value": 1,         "enabled": true },
@@ -37,11 +37,11 @@
     { "section": "2.3.11 Network security",   "cisRef": "2.3.11.7",  "description": "NTLM client: NTLMv2+128-bit",               "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\MSV1_0",                                                  "name": "NTLMMinClientSec",           "type": "DWord", "value": 537395200, "enabled": true },
     { "section": "2.3.11 Network security",   "cisRef": "2.3.11.8",  "description": "NTLM server: NTLMv2+128-bit",               "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\MSV1_0",                                                  "name": "NTLMMinServerSec",           "type": "DWord", "value": 537395200, "enabled": true },
 
-    { "section": "2.3.14 System cryptography","cisRef": "2.3.14.1",  "description": "Force strong key protection",               "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Cryptography",                                                     "name": "ForceKeyProtection",         "type": "DWord", "value": 2,         "enabled": true },
+    { "section": "2.3.14 System cryptography","cisRef": "2.3.14.1",  "description": "Force strong key protection",               "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Cryptography",                                                     "name": "ForceKeyProtection",         "type": "DWord", "value": 2,         "enabled": false },
 
     { "section": "2.3.17 UAC",                "cisRef": "2.3.17.1",  "description": "UAC: Admin Approval for built-in",          "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "FilterAdministratorToken",   "type": "DWord", "value": 1,         "enabled": true },
     { "section": "2.3.17 UAC",                "cisRef": "2.3.17.2",  "description": "UAC: Prompt consent secure desktop",        "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "ConsentPromptBehaviorAdmin", "type": "DWord", "value": 2,         "enabled": true },
-    { "section": "2.3.17 UAC",                "cisRef": "2.3.17.3",  "description": "UAC: Auto deny standard users",             "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "ConsentPromptBehaviorUser",  "type": "DWord", "value": 1,         "enabled": true },
+    { "section": "2.3.17 UAC",                "cisRef": "2.3.17.3",  "description": "UAC: Prompt standard users for credentials (secure desktop)",             "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "ConsentPromptBehaviorUser",  "type": "DWord", "value": 1,         "enabled": true },
     { "section": "2.3.17 UAC",                "cisRef": "2.3.17.4",  "description": "UAC: Detect app installs",                  "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "EnableInstallerDetection",   "type": "DWord", "value": 1,         "enabled": true },
     { "section": "2.3.17 UAC",                "cisRef": "2.3.17.5",  "description": "UAC: Secure locations only",                "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "EnableSecureUIAPaths",       "type": "DWord", "value": 1,         "enabled": true },
     { "section": "2.3.17 UAC",                "cisRef": "2.3.17.6",  "description": "UAC: Admin Approval Mode",                  "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",                                  "name": "EnableLUA",                  "type": "DWord", "value": 1,         "enabled": true },
@@ -86,9 +86,9 @@
     { "section": "18.6 System",               "cisRef": "18.6.1",    "description": "Audit: Command line in 4688",               "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\Audit",                            "name": "ProcessCreationIncludeCmdLine_Enabled", "type": "DWord", "value": 1, "enabled": true },
     { "section": "18.6 System",               "cisRef": "18.6.2",    "description": "CredSSP: Force updated clients",            "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\CredSSP\\Parameters",              "name": "AllowEncryptionOracle",      "type": "DWord", "value": 0,         "enabled": true },
     { "section": "18.6 System",               "cisRef": "18.6.3",    "description": "Non-exportable creds only",                 "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CredentialsDelegation",                                    "name": "AllowProtectedCreds",        "type": "DWord", "value": 1,         "enabled": true },
-    { "section": "18.6 System",               "cisRef": "18.6.4",    "description": "VBS: Enabled",                              "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard",                                              "name": "EnableVirtualizationBasedSecurity", "type": "DWord", "value": 1,  "enabled": true },
-    { "section": "18.6 System",               "cisRef": "18.6.4.1",  "description": "VBS: Secure Boot + DMA",                    "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard",                                              "name": "RequirePlatformSecurityFeatures", "type": "DWord", "value": 3,    "enabled": true },
-    { "section": "18.6 System",               "cisRef": "18.6.4.2",  "description": "Credential Guard: UEFI lock",               "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard",                                              "name": "LsaCfgFlags",                "type": "DWord", "value": 1,         "enabled": true },
+    { "section": "18.6 System",               "cisRef": "18.6.4",    "description": "VBS: Enabled",                              "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard",                                              "name": "EnableVirtualizationBasedSecurity", "type": "DWord", "value": 1,  "enabled": false },
+    { "section": "18.6 System",               "cisRef": "18.6.4.1",  "description": "VBS: Secure Boot + DMA",                    "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard",                                              "name": "RequirePlatformSecurityFeatures", "type": "DWord", "value": 3,    "enabled": false },
+    { "section": "18.6 System",               "cisRef": "18.6.4.2",  "description": "Credential Guard: UEFI lock",               "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard",                                              "name": "LsaCfgFlags",                "type": "DWord", "value": 1,         "enabled": false },
 
     { "section": "18.9.3 AutoPlay",           "cisRef": "18.9.3.1",  "description": "AutoPlay: No non-volume",                   "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",                                                 "name": "NoAutoplayfornonVolume",     "type": "DWord", "value": 1,         "enabled": true },
     { "section": "18.9.3 AutoPlay",           "cisRef": "18.9.3.2",  "description": "AutoPlay: Do not execute",                  "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",                                 "name": "NoAutorun",                  "type": "DWord", "value": 1,         "enabled": true },
@@ -119,7 +119,7 @@
     { "section": "18.9.52 WinRM Client",      "cisRef": "18.9.52.2", "description": "WinRM Client: No Digest",                   "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WinRM\\Client",                                            "name": "AllowDigest",                "type": "DWord", "value": 0,         "enabled": true },
     { "section": "18.9.53 WinRM Service",     "cisRef": "18.9.53.1", "description": "WinRM Service: No unencrypted",             "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WinRM\\Service",                                           "name": "AllowUnencryptedTraffic",    "type": "DWord", "value": 0,         "enabled": true },
     { "section": "18.9.53 WinRM Service",     "cisRef": "18.9.53.2", "description": "WinRM Service: No RunAs",                   "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WinRM\\Service",                                           "name": "DisableRunAs",               "type": "DWord", "value": 1,         "enabled": true },
-    { "section": "18.9.54 WinRS",             "cisRef": "18.9.54.1", "description": "Disable Remote Shell",                      "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WinRM\\Service\\WinRS",                                    "name": "AllowRemoteShellAccess",     "type": "DWord", "value": 0,         "enabled": true },
+    { "section": "18.9.54 WinRS",             "cisRef": "18.9.54.1", "description": "Disable Remote Shell",                      "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WinRM\\Service\\WinRS",                                    "name": "AllowRemoteShellAccess",     "type": "DWord", "value": 0,         "enabled": false },
 
     { "section": "18.9.56 Windows Update",    "cisRef": "18.9.56.1", "description": "WU: No auto-restart",                       "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU",                                        "name": "NoAutoRebootWithLoggedOnUsers", "type": "DWord", "value": 1,      "enabled": true },
 
@@ -134,9 +134,9 @@
   "services": [
     { "section": "5 System Services", "cisRef": "5.1",  "description": "IIS Admin",            "name": "IISADMIN",       "enabled": true },
     { "section": "5 System Services", "cisRef": "5.2",  "description": "Infrared",             "name": "irmon",          "enabled": true },
-    { "section": "5 System Services", "cisRef": "5.3",  "description": "WSL",                  "name": "LxssManager",    "enabled": true },
+    { "section": "5 System Services", "cisRef": "5.3",  "description": "WSL",                  "name": "LxssManager",    "enabled": false },
     { "section": "5 System Services", "cisRef": "5.4",  "description": "FTP",                  "name": "FTPSVC",         "enabled": true },
-    { "section": "5 System Services", "cisRef": "5.5",  "description": "OpenSSH Server",       "name": "sshd",           "enabled": true },
+    { "section": "5 System Services", "cisRef": "5.5",  "description": "OpenSSH Server",       "name": "sshd",           "enabled": false },
     { "section": "5 System Services", "cisRef": "5.6",  "description": "RPC Locator",          "name": "RpcLocator",     "enabled": true },
     { "section": "5 System Services", "cisRef": "5.7",  "description": "RRAS",                 "name": "RemoteAccess",   "enabled": true },
     { "section": "5 System Services", "cisRef": "5.8",  "description": "Simple TCP/IP",        "name": "simptcp",        "enabled": true },
@@ -146,7 +146,7 @@
     { "section": "5 System Services", "cisRef": "5.12", "description": "Web Mgmt",             "name": "WMSvc",          "enabled": true },
     { "section": "5 System Services", "cisRef": "5.13", "description": "WMP Net",              "name": "WMPNetworkSvc",  "enabled": true },
     { "section": "5 System Services", "cisRef": "5.14", "description": "Hotspot",              "name": "icssvc",         "enabled": true },
-    { "section": "5 System Services", "cisRef": "5.15", "description": "Push Notifications",   "name": "WpnService",     "enabled": true },
+    { "section": "5 System Services", "cisRef": "5.15", "description": "Push Notifications",   "name": "WpnService",     "enabled": false },
     { "section": "5 System Services", "cisRef": "5.16", "description": "PushToInstall",        "name": "PushToInstall",  "enabled": true },
     { "section": "5 System Services", "cisRef": "5.17", "description": "Remote Registry",      "name": "RemoteRegistry", "enabled": true }
   ],
