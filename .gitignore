@@ -2,6 +2,11 @@
 **/Logs/
 **/Evidence/
 **/Mount/
+**/Snapshots/
+
+# Pester test output (Invoke-Tests.ps1 -CI, or stray runs)
+**/tests/results/
+testResults.xml
 
 # Sentinel / state files
 **/UpdatesFinished.txt
