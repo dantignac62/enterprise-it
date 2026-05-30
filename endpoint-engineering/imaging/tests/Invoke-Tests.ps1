@@ -18,7 +18,8 @@
     in this directory.
 
 .PARAMETER Output
-    Pester output verbosity: None, Normal, Detailed, Diagnostic. Default Detailed.
+    Pester output verbosity: None, Normal, Detailed, Diagnostic. Default Normal
+    (one line per test file). Use Detailed for a per-test breakdown.
 
 .PARAMETER CI
     Emit NUnit + JaCoCo result files under tests\results\ for pipeline ingestion.
@@ -32,7 +33,7 @@
 [CmdletBinding()]
 param(
     [string]$Path = $PSScriptRoot,
-    [ValidateSet('None','Normal','Detailed','Diagnostic')][string]$Output = 'Detailed',
+    [ValidateSet('None','Normal','Detailed','Diagnostic')][string]$Output = 'Normal',
     [switch]$CI
 )
 

@@ -15,10 +15,13 @@ Install-Module PSScriptAnalyzer -Scope CurrentUser -Force -SkipPublisherCheck
 ## Running
 
 ```powershell
-# All tests, from this directory:
+# All tests, from this directory (one line per test file):
 pwsh -NoProfile -File .\Invoke-Tests.ps1
 
-# One file / pattern, more detail:
+# Per-test breakdown (useful when something fails):
+pwsh -NoProfile -File .\Invoke-Tests.ps1 -Output Detailed
+
+# One file / pattern, maximum diagnostics:
 pwsh -NoProfile -File .\Invoke-Tests.ps1 -Path .\ImageHardeningLib.Tests.ps1 -Output Diagnostic
 
 # CI mode (writes NUnit XML to .\results\):
