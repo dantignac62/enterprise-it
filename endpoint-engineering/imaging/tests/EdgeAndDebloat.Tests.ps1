@@ -58,6 +58,11 @@ Describe 'Set-EdgeUrlListKey' {
 
     It 'honors -WhatIf: no key removal, creation, or value writes' {
         Mock Test-Path { $true }
+        # Note: -WhatIf prints two "What if:" preview lines to the host. That
+        # text is written by PowerShell's ShouldProcess machinery directly to
+        # the console and cannot be redirected by any stream (*>$null, 6>$null,
+        # etc. all leave it). It is harmless informational output -- in fact it
+        # confirms the safety gate fired -- and is expected in this one test.
         Set-EdgeUrlListKey -SID 'S-1-5-21-X' -PolicyName 'URLAllowlist' -Urls @('a.com') -WhatIf
         Should -Invoke Remove-Item    -Times 0 -Exactly
         Should -Invoke New-Item       -Times 0 -Exactly

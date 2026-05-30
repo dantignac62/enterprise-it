@@ -134,7 +134,7 @@ Describe 'Logging: counters and levels' {
         Write-Log 'd' -Level SKIP_MANIFEST
         Write-Log 'e' -Level WARN
         Write-Log 'f' -Level ERROR
-        Write-LogSummary -ScriptName 'Test'
+        Write-LogSummary -ScriptName 'Test' 6>$null  # 6>$null: silence the console summary box (still written to the log + sidecar)
 
         $c = (Read-Summary -LogPath $script:Log).Counters
         $c.Applied           | Should -Be 2
@@ -157,7 +157,7 @@ Describe 'Logging: counters and levels' {
         Write-Log 'x' -Level APPLIED
         $log2 = Join-Path $TestDrive 'fresh.log'
         Initialize-HardeningLog -LogPath $log2 -Component 'Test' -Quiet
-        Write-LogSummary -ScriptName 'Test'
+        Write-LogSummary -ScriptName 'Test' 6>$null  # 6>$null: silence the console summary box (still written to the log + sidecar)
         (Read-Summary -LogPath $log2).Counters.Applied | Should -Be 0
     }
 
@@ -196,7 +196,7 @@ Describe 'Skip-ByManifest' {
 
     It 'increments the SkippedByManifest counter and emits a SKIPPED_BY_MANIFEST event' {
         Skip-ByManifest -Description 'Disable Copilot' -Category 'Registry' -Target 'HKLM:\...\Copilot' -CISRef '1.2.3'
-        Write-LogSummary -ScriptName 'Test'
+        Write-LogSummary -ScriptName 'Test' 6>$null  # 6>$null: silence the console summary box (still written to the log + sidecar)
 
         (Read-Summary -LogPath $script:Log).Counters.SkippedByManifest | Should -Be 1
 
@@ -269,7 +269,7 @@ Describe 'Set-HardenedRegistry (mocked registry provider)' {
 
         { Set-HardenedRegistry -Path 'HKLM:\SOFTWARE\Test' -Name 'V' -Value 1 -Description 'x' } |
             Should -Not -Throw
-        Write-LogSummary -ScriptName 'Test'
+        Write-LogSummary -ScriptName 'Test' 6>$null  # 6>$null: silence the console summary box (still written to the log + sidecar)
         (Read-Summary -LogPath $script:Log).Counters.Errors | Should -Be 1
     }
 }
@@ -283,7 +283,7 @@ Describe 'Set-HardenedRegistryNet' {
     It 'logs an ERROR for a root other than HKLM:/HKCU: instead of throwing' {
         { Set-HardenedRegistryNet -Resolved 'HKCR:\Some/Key' -Name 'V' -Value 1 -Type DWord -Label 'bad root' } |
             Should -Not -Throw
-        Write-LogSummary -ScriptName 'Test'
+        Write-LogSummary -ScriptName 'Test' 6>$null  # 6>$null: silence the console summary box (still written to the log + sidecar)
         (Read-Summary -LogPath $script:Log).Counters.Errors | Should -Be 1
     }
 }
